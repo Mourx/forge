@@ -1,0 +1,18 @@
+creatures on board
+creautres on oppponent's board
+cards in hand
+cards in oppponent's hand
+available mana per colour
+potential card to play
+
+2
+3
+4
+1
+
+3(w)
+2(u)
+0(b)
+0(r)
+0(g)
+0(c)
