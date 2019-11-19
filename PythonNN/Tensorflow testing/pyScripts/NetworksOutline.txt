@@ -1,0 +1,29 @@
+network 0: cards in hand pre processing.
+inputs: Card attributes,
+		Card cost
+		
+outputs: Card type: 0,1,2,3,4,5 etc
+
+
+network 1: Who's the beatdown?
+inputs: Life, 
+		their Life,
+		turns to kill with current power, 
+		turns to death with current power, 
+		strongest power, 
+		their strongest power,
+		
+outputs: scaler (0..1) classifies as either:
+			Beatdown,
+			Defensive
+
+
+network 2 and 3 (maybe combined): what move to make?
+inputs: same as N1, 
+		Cards in hand,
+		current card type, 
+		beatdown,
+		defensive
+		
+outputs: score/rating of input card: (0..1)
+		
