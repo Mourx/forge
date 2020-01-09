@@ -36,6 +36,7 @@ public class CardTypeSorter {
 		types.add(i);
 		i = v.isSorcery() ? 1:0;
 		types.add(i);
+		//comment
 		
 		
 		return types;
