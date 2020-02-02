@@ -7,39 +7,41 @@ import forge.util.collect.FCollectionView;
 import java.util.ArrayList;
 
 import forge.card.*;
+import com.google.gson.*;
 
 public class CardTypeSorter {
 	
+	public CardTypeSorter() {
+		
+	}
 	
-	public ArrayList<Integer> GetTypes(Card c){
-		ArrayList<Integer> types = new ArrayList<Integer>();
+	public void GetTypes(Card c){
+		ArrayList<CardPackage> types = new ArrayList<CardPackage>();
 		
 		CardTypeView v = c.getType();
 		
 		//Add Type Information
 		//Ignoring weird types like conspiracy, tribal, etc.
 		int i = v.isArtifact() ? 1 : 0;
-		types.add(i);
+		types.add(new CardPackage("Artifact",i));
 		i = v.isBasicLand() ? 1:0;
-		types.add(i);
-		i = v.isBasicLand() ? 1:0;
-		types.add(i);
+		types.add(new CardPackage("BasicLand",i));
 		i = v.isCreature() ? 1:0;
-		types.add(i);
+		types.add(new CardPackage("Creature",i));
 		i = v.isEnchantment() ? 1:0;
-		types.add(i);
+		types.add(new CardPackage("Enchantment",i));
 		i = v.isInstant() ? 1:0;
-		types.add(i);
+		types.add(new CardPackage("Instant",i));
 		i = v.isLand() ? 1:0;
-		types.add(i);
+		types.add(new CardPackage("Land",i));
 		i = v.isLegendary() ? 1:0;
-		types.add(i);
+		types.add(new CardPackage("Legendary",i));
 		i = v.isPermanent() ? 1:0;
-		types.add(i);
+		types.add(new CardPackage("Permanent",i));
 		i = v.isPlaneswalker() ? 1:0;
-		types.add(i);
+		types.add(new CardPackage("Planeswalker",i));
 		i = v.isSorcery() ? 1:0;
-		types.add(i);
+		types.add(new CardPackage("Sorcery",i));
 		
 		//Add a mark to show creature has ability, 1 for mana, another 1 for 
 		// non mana-ability
@@ -59,36 +61,40 @@ public class CardTypeSorter {
 			tou = c.getBaseToughness();
 		}
 		//mana ability
-		types.add(i);
+		types.add(new CardPackage("ManaAbility",i));
 		//other ability
-		types.add(j);
+		types.add(new CardPackage("ActivatedAbility",j));
 		//ETB effect;
-		types.add(k);
+		types.add(new CardPackage("ETBEffect",k));
 		//power
-		types.add(pow);
+		types.add(new CardPackage("Power",pow));
 		//toughness
-		types.add(tou);
+		types.add(new CardPackage("Toughness",tou));
 		
 		//CMC
 		int cmc = c.getCMC();
-		types.add(cmc);
+		types.add(new CardPackage("CMC",cmc));
 		
 		//Actual Mana Cost
 		int[] wubrg = c.getManaCost().getColorShardCounts();
 		//White
-		types.add(wubrg[0]);
+		types.add(new CardPackage("White",wubrg[0]));
 		//blUe
-		types.add(wubrg[1]);
+		types.add(new CardPackage("Blue",wubrg[1]));
 		//Black
-		types.add(wubrg[2]);
+		types.add(new CardPackage("Black",wubrg[2]));
 		//Red
-		types.add(wubrg[3]);
+		types.add(new CardPackage("Red",wubrg[3]));
 		//Green
-		types.add(wubrg[4]);
+		types.add(new CardPackage("Green",wubrg[4]));
 		//Generic mana
 		int generic = c.getManaCost().getGenericCost();
-		types.add(generic);
+		types.add(new CardPackage("Generic",generic));
 				
-		return types;
+		GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
+		Gson gson = builder.create();
+		String json = gson.toJson(types);
+		System.out.print(json);
+		
 	}
 }

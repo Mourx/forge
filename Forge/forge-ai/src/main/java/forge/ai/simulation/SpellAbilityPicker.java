@@ -58,6 +58,10 @@ public class SpellAbilityPicker {
     
     private List<SpellAbility> getCandidateSpellsAndAbilities() {
         CardCollection cards = ComputerUtilAbility.getAvailableCards(game, player);
+        CardTypeSorter sorter = new CardTypeSorter();
+        for(Card card:cards) {
+        	sorter.GetTypes(card);
+        }
         List<SpellAbility> all = ComputerUtilAbility.getSpellAbilities(cards, player);
         CardCollection landsToPlay = ComputerUtilAbility.getAvailableLandsToPlay(game, player);
         if (landsToPlay != null) {

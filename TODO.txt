@@ -1,0 +1,10 @@
+look in CHand in desktop/src/main/java/forge/screens/match/controllers/CHand.java
+handles the GUI for matches, wanted to use UpdateHand to evaluate cards
+
+spellabilitypicker for the AI, swap in the NN there;
+  skip Abilities for now, only focus cards?
+
+Get breakpoints working, doesn't seem to run the above function? but must do in a thread somewhere
+
+
+Work out tensorflow to java

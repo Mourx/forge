@@ -165,6 +165,7 @@ public class CHand implements ICDoc {
                 Animation.moveCard(placeholder);
             }
         }
+        
     }
 
     @Override
