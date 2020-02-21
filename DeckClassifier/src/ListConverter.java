@@ -83,10 +83,14 @@ public class ListConverter {
 							response.append(inputLine);
 						}
 						in.close();
-						
+						GsonBuilder builder = new GsonBuilder();
+						Gson gson = builder.create();
+						String fullCleaned = response.toString().replace("—", "-"); //formatting made em dash an error symbol
+						CardDataJson json = gson.fromJson(fullCleaned, CardDataJson.class);
+						String data = gson.toJson(json);
 						// print result
-						System.out.println(response.toString());
-						jsonCards.add(response.toString());
+						System.out.println(data);
+						jsonCards.add(data);
 					}
 				} catch (IOException e) {
 					System.out.println("Nopety Nope that URL is broke.");
