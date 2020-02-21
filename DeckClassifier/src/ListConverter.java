@@ -19,9 +19,9 @@ public class ListConverter {
 	public ListConverter() {
 		//yeet
 	}
-	public boolean ReadDeck() {
+	public boolean ReadDeck(String deckname) {
 		try {
-			File deck = new File("MtGJson/House Party.dck");
+			File deck = new File("MtGJson/"+deckname);
 			Scanner reader = new Scanner(deck);
 			boolean bList = false; //tag if we are at decklist yet
 			while(reader.hasNextLine()) {
@@ -36,7 +36,7 @@ public class ListConverter {
 						String[] cData = data.split(" ", 2);
 						CardData card = new CardData(Integer.parseInt(cData[0]),cData[1]);
 						deckList.add(card);
-						System.out.println(card.name);
+						//System.out.println(card.name);
 					}
 				}
 			}
@@ -72,8 +72,8 @@ public class ListConverter {
 					con.setConnectTimeout(4000);
 					con.setReadTimeout(4000);
 					int responseCode = con.getResponseCode();
-					System.out.println(con.getResponseMessage());
-					System.out.println(responseCode);
+					//System.out.println(con.getResponseMessage());
+					//System.out.println(responseCode);
 					if (responseCode == HttpURLConnection.HTTP_OK) {
 						BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 						String inputLine;
@@ -89,7 +89,7 @@ public class ListConverter {
 						CardDataJson json = gson.fromJson(fullCleaned, CardDataJson.class);
 						String data = gson.toJson(json);
 						// print result
-						System.out.println(data);
+						//System.out.println(data);
 						jsonCards.add(data);
 					}
 				} catch (IOException e) {
@@ -100,11 +100,14 @@ public class ListConverter {
 		}
 	}
 	
-	public void saveJsonList() {
+	public void saveJsonList(String deckname) {
 		try {
-			File file = new File("newList.txt");
+			String str = "MtGJson/"+deckname;
+			str = str.split("\\.")[0] + ".json";
+			System.out.println(str);
+			File file = new File(str);
 			if(file.createNewFile()) {
-				FileWriter writer = new FileWriter("newList.txt");
+				FileWriter writer = new FileWriter(str);
 				for(int i = 0;i<jsonCards.size();i++) {
 					writer.write(jsonCards.get(i)+"\n");
 					
