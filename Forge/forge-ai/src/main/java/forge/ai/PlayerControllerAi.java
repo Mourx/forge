@@ -608,6 +608,7 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public List<SpellAbility> chooseSpellAbilityToPlay() {
+    	System.out.print("3");
         return brains.chooseSpellAbilityToPlay();
     }
     

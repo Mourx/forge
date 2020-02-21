@@ -1,5 +1,7 @@
-look in CHand in desktop/src/main/java/forge/screens/match/controllers/CHand.java
-handles the GUI for matches, wanted to use UpdateHand to evaluate cards
+Have to hard-enable UseSimulation, as I cannot find the setting in the menu.
+Gane crashed when running in this mode - fluke?
+update to not spam print -> each upkeep check boardstate value: improved?
+reinforced card scores if boardstate improved: presumably ok if improvement observed.
 
 spellabilitypicker for the AI, swap in the NN there;
   skip Abilities for now, only focus cards?

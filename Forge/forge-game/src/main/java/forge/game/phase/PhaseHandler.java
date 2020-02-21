@@ -979,7 +979,7 @@ public class PhaseHandler implements java.io.Serializable {
                         pPlayerPriority = game.getNextPlayerAfter(getPriorityPlayer());
                         pFirstPriority = pPlayerPriority;
                     }
-
+                    System.out.print("4");
                     chosenSa = pPlayerPriority.getController().chooseSpellAbilityToPlay();
                     if (chosenSa == null) {
                         break; // that means 'I pass'

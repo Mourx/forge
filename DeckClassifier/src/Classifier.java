@@ -7,7 +7,8 @@ public class Classifier {
 		if(classifier.ReadDeck()) {
 			classifier.matchJson();
 		}
-		classifier.getCard();
+		classifier.getCards();
+		classifier.saveJsonList();
 	}
 
 }
