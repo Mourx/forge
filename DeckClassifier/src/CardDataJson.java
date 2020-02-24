@@ -9,7 +9,7 @@ public class CardDataJson {
 	public String[] colors;
 	public float power;
 	public float toughness;
-	public StringData keywords;
+	public Map<String,String[]> keywords;
 	public CardDataJson () {
 		
 	}

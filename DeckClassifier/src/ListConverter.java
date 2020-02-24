@@ -92,7 +92,7 @@ public class ListConverter {
 						String fullCleaned = response.toString().replaceAll("—", "-"); //formatting made em dash an error symbol
 						fullCleaned = fullCleaned.toString().replaceAll("\u0027", "");
 						CardDataJson json = gson.fromJson(fullCleaned, CardDataJson.class);
-						StringData keywords = GetKeywords(json.name);
+						Map<String,String[]> keywords = GetKeywords(json.name);
 						json.keywords = keywords;
 						String data = gson.toJson(json);
 						// print result
@@ -107,9 +107,8 @@ public class ListConverter {
 		}
 	}
 
-	public StringData GetKeywords(String name) {
-		Map<String,String> keys = new HashMap<String,String>();
-		Map<String,String[]> akeys = new HashMap<String,String[]>();
+	public Map<String,String[]> GetKeywords(String name) {
+		Map<String,String[]> keys = new HashMap<String,String[]>();
 		name = name.replaceAll("\\s", "_");
 		File dir = new File("../../Forge/forge/forge-gui/res/cardsfolder/"+name.toLowerCase().charAt(0)+"/");
 		for(File file:dir.listFiles()) {
@@ -131,18 +130,21 @@ public class ListConverter {
 						String[] abilities = data.split("\\|");
 						for(int i = 0;i<abilities.length;i++) {
 							if(!abilities[i].contains("Cost")) {
-								if(abilities[i].contains("Choices$")||abilities[i].contains("ValidTarget$")	 ) {
-										
-									System.out.println(abilities[i]);
-									String[] div = abilities[i].trim().split("\\s",2);
-									String[] words = div[1].split(",");
 
-									
-									akeys.put(div[0], words);
-								 
+								String[] div = abilities[i].trim().split("\\s",2);
+								if(div[1].contains("\u0026")) System.out.println(div[1]);
+								div[1] = div[1].replaceAll(" \u0026 ", ",");
+								div[1] = div[1].replaceAll("\u0027", "");
+								if(div[1].contains("\\s")) {
+									String[] fin = new String[1];
+									fin[0] =  div[1].replaceAll("\u0026", "");
+									fin[0] = fin[0].replaceAll("\u0027", "");
+									keys.put(div[0],fin);	
 								}else {
-									String[] div = abilities[i].trim().split("\\s",2);
-									keys.put(div[0], div[1].replaceAll("\u0026", "").replaceAll("\u0027", ""));
+								String[] words = div[1].split(",");
+
+								
+								keys.put(div[0], words);
 								}
 							}
 						}
@@ -151,8 +153,7 @@ public class ListConverter {
 			}
 		}
 		
-		StringData ret = new StringData(keys,akeys);
-		return ret;
+		return keys;
 	}
 	
 	public void saveJsonList(String deckname) {
