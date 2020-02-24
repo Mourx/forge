@@ -7,11 +7,13 @@ public class Classifier {
 		ListConverter classifier = new ListConverter();
 		File dir = new File("MtGJson/");
 		for(File file: dir.listFiles()){
-			if(classifier.ReadDeck(file.getName())) {
-				//classifier.matchJson();
+			if(file.getName().contains(".dck")) {
+				if(classifier.ReadDeck(file.getName())) {
+					//classifier.matchJson();
+				}
+				classifier.getCards();
+				classifier.saveJsonList(file.getName());
 			}
-			classifier.getCards();
-			classifier.saveJsonList(file.getName());
 		}
 	}
 

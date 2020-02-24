@@ -8,6 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -21,6 +23,8 @@ public class ListConverter {
 	}
 	public boolean ReadDeck(String deckname) {
 		try {
+			deckList.clear();
+			jsonCards.clear();
 			File deck = new File("MtGJson/"+deckname);
 			Scanner reader = new Scanner(deck);
 			boolean bList = false; //tag if we are at decklist yet
@@ -85,8 +89,11 @@ public class ListConverter {
 						in.close();
 						GsonBuilder builder = new GsonBuilder();
 						Gson gson = builder.create();
-						String fullCleaned = response.toString().replace("—", "-"); //formatting made em dash an error symbol
+						String fullCleaned = response.toString().replaceAll("—", "-"); //formatting made em dash an error symbol
+						fullCleaned = fullCleaned.toString().replaceAll("\u0027", "");
 						CardDataJson json = gson.fromJson(fullCleaned, CardDataJson.class);
+						StringData keywords = GetKeywords(json.name);
+						json.keywords = keywords;
 						String data = gson.toJson(json);
 						// print result
 						//System.out.println(data);
@@ -98,6 +105,54 @@ public class ListConverter {
 				}
 			}
 		}
+	}
+
+	public StringData GetKeywords(String name) {
+		Map<String,String> keys = new HashMap<String,String>();
+		Map<String,String[]> akeys = new HashMap<String,String[]>();
+		name = name.replaceAll("\\s", "_");
+		File dir = new File("../../Forge/forge/forge-gui/res/cardsfolder/"+name.toLowerCase().charAt(0)+"/");
+		for(File file:dir.listFiles()) {
+			if(file.getName().contains(name.toLowerCase()+".txt")) {
+				Scanner scan = null;
+				try {
+					scan = new Scanner(new File(file.getCanonicalPath()));
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				while(scan.hasNextLine()) {
+					String data = scan.nextLine();
+					if(data.startsWith("A:") || data.startsWith("T:")) {
+						data = data.split(":")[1];
+						String[] abilities = data.split("\\|");
+						for(int i = 0;i<abilities.length;i++) {
+							if(!abilities[i].contains("Cost")) {
+								if(abilities[i].contains("Choices$")||abilities[i].contains("ValidTarget$")	 ) {
+										
+									System.out.println(abilities[i]);
+									String[] div = abilities[i].trim().split("\\s",2);
+									String[] words = div[1].split(",");
+
+									
+									akeys.put(div[0], words);
+								 
+								}else {
+									String[] div = abilities[i].trim().split("\\s",2);
+									keys.put(div[0], div[1].replaceAll("\u0026", "").replaceAll("\u0027", ""));
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		StringData ret = new StringData(keys,akeys);
+		return ret;
 	}
 	
 	public void saveJsonList(String deckname) {

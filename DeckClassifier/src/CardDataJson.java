@@ -1,3 +1,4 @@
+import java.util.Map;
 
 public class CardDataJson {
 
@@ -8,8 +9,10 @@ public class CardDataJson {
 	public String[] colors;
 	public float power;
 	public float toughness;
-	
+	public StringData keywords;
 	public CardDataJson () {
 		
 	}
 }
+
+
