@@ -132,7 +132,6 @@ public class ListConverter {
 							if(!abilities[i].contains("Cost")) {
 
 								String[] div = abilities[i].trim().split("\\s",2);
-								if(div[1].contains("\u0026")) System.out.println(div[1]);
 								div[1] = div[1].replaceAll(" \u0026 ", ",");
 								div[1] = div[1].replaceAll("\u0027", "");
 								if(div[1].contains("\\s")) {
