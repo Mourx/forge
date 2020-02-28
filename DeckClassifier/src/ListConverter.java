@@ -18,8 +18,10 @@ import com.google.gson.*;
 public class ListConverter {
 	ArrayList<CardData> deckList = new ArrayList<CardData>();
 	ArrayList<String> jsonCards = new ArrayList<String>();
+	ArrayList<CardDataJson> jsonLists = new ArrayList<CardDataJson>();
+	
 	public ListConverter() {
-		//yeet
+		
 	}
 	public boolean ReadDeck(String deckname) {
 		try {
@@ -44,6 +46,7 @@ public class ListConverter {
 					}
 				}
 			}
+			reader.close();
 			return true;
 		} catch(FileNotFoundException e){
 			System.out.println("Whoops that's not real!");
@@ -51,18 +54,6 @@ public class ListConverter {
 		}
 	}
 	
-	public void matchJson() {
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		try {
-			File json = new File("MtGJson/AllCards.json");
-			
-			Scanner reader = new Scanner(json);
-			//Properties data = gson.fromJson(reader.,Properties.class);
-		}catch(FileNotFoundException e) {
-			System.out.println("Whoops that's not real!");
-		}
-	}
 	
 	public void getCards() {
 		for(int i = 0; i<deckList.size();i++) {
@@ -98,6 +89,7 @@ public class ListConverter {
 						// print result
 						//System.out.println(data);
 						jsonCards.add(data);
+						jsonLists.add(json);
 					}
 				} catch (IOException e) {
 					System.out.println("Nopety Nope that URL is broke.");
@@ -174,5 +166,8 @@ public class ListConverter {
 		}catch (IOException e) {
 			
 		}
+	}
+	public ArrayList<CardDataJson> getDeckList(){
+		return jsonLists;
 	}
 }
