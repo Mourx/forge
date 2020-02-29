@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -28,13 +30,19 @@ public class Classifier {
 	static int CARD_HEIGHT = 135;
 	static int INSPECT_WIDTH = 200;
 	static int INSPECT_HEIGHT = 300;
-	public static void main(String[] args) {
+	static Map<String, ArrayList<CardDataJson>> decks = new HashMap<String, ArrayList<CardDataJson>>();
+	static Map<String, Boolean> loaded = new HashMap<String,Boolean>();
+	static ArrayList<String> keys;
+	static String currentDeck = "";
+	
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		File dir = new File("MtGJson/");
 		bNext = true;
 		files = dir.listFiles();
-		if(files[fileIndex].getName().contains(".dck") && bNext) {	
-			makeGui(doDataThings(files[fileIndex]));
+		if(files[fileIndex].getName().contains(".dck") && bNext) {
+			decks.put(files[fileIndex].getCanonicalPath(), doDataThings(files[fileIndex]));
+			makeGui();
 			bNext = false;
 			while(!bNext) {}
 		}
@@ -42,7 +50,9 @@ public class Classifier {
 	
 	
 	
-	public static void makeGui(ArrayList<CardDataJson> json) {
+	public static void makeGui() {
+		currentDeck = (String) decks.keySet().toArray()[0];
+		ArrayList<CardDataJson> json = decks.get(currentDeck);
 		DefaultTableModel model = new DefaultTableModel(ROWS,COLUMNS) {
 			@Override
 			public Class<?> getColumnClass(int column){
