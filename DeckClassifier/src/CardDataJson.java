@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Map;
 
 public class CardDataJson {
@@ -8,8 +7,8 @@ public class CardDataJson {
 	public float cmc;
 	public String type_line;
 	public String[] colors;
-	public float power;
-	public float toughness;
+	public String power;
+	public String toughness;
 	public Map<String,String[]> keywords;
 	public StringData image_uris;
 	public CardDataJson () {

@@ -5,12 +5,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Scanner;
 
 import com.google.gson.*;
@@ -33,11 +31,14 @@ public class ListConverter {
 			while(reader.hasNextLine()) {
 				String data = reader.nextLine();
 				
-				if(data.contains("[main]")) {
+				if(data.contains("[main]") || data.contains("[Main]")) {
 					bList = true;
 				}
+				if(data.contains("[sideboard]") || data.contains("[Sideboard]")) {
+					bList = false;
+				}
 				if(bList == true) {
-					if(!data.contains("[")) {
+					if(!data.contains("[") && !(data.isEmpty())) {
 						data = data.split("\\|")[0];
 						String[] cData = data.split(" ", 2);
 						CardData card = new CardData(Integer.parseInt(cData[0]),cData[1]);
@@ -67,8 +68,6 @@ public class ListConverter {
 					con.setConnectTimeout(4000);
 					con.setReadTimeout(4000);
 					int responseCode = con.getResponseCode();
-					//System.out.println(con.getResponseMessage());
-					//System.out.println(responseCode);
 					if (responseCode == HttpURLConnection.HTTP_OK) {
 						BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 						String inputLine;
@@ -82,14 +81,16 @@ public class ListConverter {
 						Gson gson = builder.create();
 						String fullCleaned = response.toString().replaceAll("—", "-"); //formatting made em dash an error symbol
 						fullCleaned = fullCleaned.toString().replaceAll("\u0027", "");
+						fullCleaned = fullCleaned.toString().replaceAll("\\+", "");
 						CardDataJson json = gson.fromJson(fullCleaned, CardDataJson.class);
 						Map<String,String[]> keywords = GetKeywords(json.name);
 						json.keywords = keywords;
 						String data = gson.toJson(json);
-						// print result
-						//System.out.println(data);
+						
 						jsonCards.add(data);
 						jsonLists.add(json);
+					} else {
+						System.out.println("can't Connect");
 					}
 				} catch (IOException e) {
 					System.out.println("Nopety Nope that URL is broke.");
@@ -124,18 +125,22 @@ public class ListConverter {
 							if(!abilities[i].contains("Cost")) {
 
 								String[] div = abilities[i].trim().split("\\s",2);
-								div[1] = div[1].replaceAll(" \u0026 ", ",");
-								div[1] = div[1].replaceAll("\u0027", "");
-								if(div[1].contains("\\s")) {
-									String[] fin = new String[1];
-									fin[0] =  div[1].replaceAll("\u0026", "");
-									fin[0] = fin[0].replaceAll("\u0027", "");
-									keys.put(div[0],fin);	
+								if(div.length>1) {
+									div[1] = div[1].replaceAll(" \u0026 ", ",");
+									div[1] = div[1].replaceAll("\u0027", "");
+									if(div[1].contains("\\s")) {
+										String[] fin = new String[1];
+										fin[0] =  div[1].replaceAll("\u0026", "");
+										fin[0] = fin[0].replaceAll("\u0027", "");
+										keys.put(div[0],fin);	
+									}else {
+									String[] words = div[1].split(",");
+	
+									
+									keys.put(div[0], words);
+									}
 								}else {
-								String[] words = div[1].split(",");
-
-								
-								keys.put(div[0], words);
+									keys.put(div[0],null);
 								}
 							}
 						}

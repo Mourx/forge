@@ -6,11 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +21,7 @@ public class Classifier {
 
 	static boolean bNext;
 	static File[] files;
+	static ArrayList<File> baseDecks = new ArrayList<File>();
 	static int fileIndex = 0;
 	static int ROWS = 5;
 	static int COLUMNS = 12;
@@ -32,27 +31,82 @@ public class Classifier {
 	static int INSPECT_HEIGHT = 300;
 	static Map<String, ArrayList<CardDataJson>> decks = new HashMap<String, ArrayList<CardDataJson>>();
 	static Map<String, Boolean> loaded = new HashMap<String,Boolean>();
-	static ArrayList<String> keys;
+	static ArrayList<String> keys = new ArrayList<String>();
 	static String currentDeck = "";
+	static JTable table;
+	static int BUFFER_SIZE = 6; // 3 decks either side loaded
+	static int buffLoaded = 0;
+	static int prevLoaded = 0;
+	static ArrayList<ImageData> imgData = new ArrayList<ImageData>();
+	static int currentLoad = 0;
+	static int prevLoad = 0;
+	static JLabel highlight;
+	static DisplayThread thread = new DisplayThread();
+	static boolean bBuffering = false;
+	
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		File dir = new File("MtGJson/");
-		bNext = true;
-		files = dir.listFiles();
-		if(files[fileIndex].getName().contains(".dck") && bNext) {
-			decks.put(files[fileIndex].getCanonicalPath(), doDataThings(files[fileIndex]));
-			makeGui();
-			bNext = false;
-			while(!bNext) {}
-		}
+		scanFiles();
+		loadData(fileIndex);
+		makeGui();
+		loadDeck();
+		LoadingThread thread = new LoadingThread();
+		thread.execute();
 	}
 	
 	
 	
+	
+	public static void scanFiles() {
+		File dir = new File("MtGJson/");
+		files = dir.listFiles();
+		for(File file : files) {
+			if(file.getName().contains(".dck")) {
+				baseDecks.add(file);
+			}
+		}
+	}
+	
+	public static void loadData(int loadIndex) {		
+		try {
+			decks.put(baseDecks.get(loadIndex).getCanonicalPath(), doDataThings(baseDecks.get(loadIndex)));
+			keys.add(baseDecks.get(loadIndex).getCanonicalPath());
+			ArrayList<CardDataJson> json = decks.get(keys.get(loadIndex));
+			ImageData iD = new ImageData();
+			for(int i=0;i<json.size();i++) {
+				URL url;
+				try {
+					url = new URL(json.get(i).image_uris.normal);
+					
+					iD.buffImgs.add(ImageIO.read(url));
+					iD.imgs.add(new ImageIcon(iD.buffImgs.get(i).getScaledInstance(CARD_WIDTH, CARD_HEIGHT, Image.SCALE_SMOOTH)));
+				}catch (IOException er) {
+					// TODO Auto-generated catch block
+					er.printStackTrace();
+				}
+			}
+			imgData.add(iD);
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
+	public static void loadDeck() {
+		currentDeck = keys.get(fileIndex);
+		ArrayList<CardDataJson> json = decks.get(keys.get(fileIndex));
+		for(int i=0;i<json.size();i++) {
+			JLabel label = new JLabel(imgData.get(fileIndex).imgs.get(i)); 
+			label.setSize(CARD_WIDTH,CARD_HEIGHT);
+			table.setValueAt(label.getIcon(),i/COLUMNS,i%COLUMNS);
+		}
+	}
+	
 	public static void makeGui() {
-		currentDeck = (String) decks.keySet().toArray()[0];
-		ArrayList<CardDataJson> json = decks.get(currentDeck);
+		
 		DefaultTableModel model = new DefaultTableModel(ROWS,COLUMNS) {
 			@Override
 			public Class<?> getColumnClass(int column){
@@ -65,32 +119,21 @@ public class Classifier {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				bNext = true;
+				
+				thread.execute();
+				if(bNext == true) {
+					LoadingThread th = new LoadingThread();
+					th.execute();
+				}
 			}
 		});
 		
-		JTable table = new JTable(model);
+		table = new JTable(model);
 		table.setRowHeight(CARD_HEIGHT);
 		table.setShowGrid(false);
-		ArrayList<ImageIcon> imgs = new ArrayList<ImageIcon>();
-		ArrayList<BufferedImage> buffImgs = new ArrayList<BufferedImage>();
-		for(int i=0;i<json.size();i++) {
-			URL url;
-			try {
-				url = new URL(json.get(i).image_uris.normal);
-				buffImgs.add(ImageIO.read(url));
-				imgs.add(new ImageIcon(buffImgs.get(i).getScaledInstance(CARD_WIDTH, CARD_HEIGHT, Image.SCALE_SMOOTH)));
-				JLabel label = new JLabel(imgs.get(i)); 
-				label.setSize(CARD_WIDTH,CARD_HEIGHT);
-				table.setValueAt(label.getIcon(),i/COLUMNS,i%COLUMNS);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-				
-		}
 		
-		JLabel highlight = new JLabel(new ImageIcon(imgs.get(0).getImage().getScaledInstance(INSPECT_WIDTH, INSPECT_HEIGHT, Image.SCALE_SMOOTH)));
+		
+		highlight = new JLabel();
 		table.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -98,17 +141,12 @@ public class Classifier {
 				int row = table.rowAtPoint(p);
 				int col = table.columnAtPoint(p);
 				if ((row > -1 && row < table.getRowCount()) && (col > -1 && col < table.getColumnCount())) {
-					int index = row*COLUMNS + col;
-					
-						
-						
-					highlight.setIcon(new ImageIcon(buffImgs.get(index).getScaledInstance(INSPECT_WIDTH, INSPECT_HEIGHT, Image.SCALE_SMOOTH)));
-					
+					int index = row*COLUMNS + col;	
+					highlight.setIcon(new ImageIcon(imgData.get(fileIndex).buffImgs.get(index).getScaledInstance(INSPECT_WIDTH, INSPECT_HEIGHT, Image.SCALE_SMOOTH)));
 				}
-				
-				
 			}
 		});
+		
 		table.setPreferredSize(new Dimension(CARD_WIDTH*COLUMNS, CARD_HEIGHT*ROWS));
 		frame.getContentPane().add(table,BorderLayout.WEST);
 		frame.getContentPane().add(highlight,BorderLayout.CENTER);
@@ -127,4 +165,69 @@ public class Classifier {
 		classifier.saveJsonList(file.getName());
 		return classifier.getDeckList();
 	}
+	
+	
+	public static class LoadingThread extends SwingWorker<String, Object> {
+
+		public LoadingThread() {
+
+		}
+		
+		@Override
+		protected String doInBackground() throws Exception {
+			// TODO Auto-generated method stub
+			bBuffering = true;
+			while(true) {
+				if(thread.isDone()) {
+					thread.cancel(true);
+				}
+				if(buffLoaded - fileIndex < BUFFER_SIZE/2) {
+					
+					if(decks.get(baseDecks.get(buffLoaded).getCanonicalPath()) == null) {
+						loadData(buffLoaded);
+							
+					}
+					buffLoaded++;
+				}
+				if(fileIndex - prevLoaded < BUFFER_SIZE/2) {
+					if(fileIndex - prevLoaded >= 0) {
+						
+						if(decks.get(baseDecks.get(prevLoaded).getCanonicalPath()) == null) {
+							loadData(prevLoaded);
+							
+						}
+						prevLoaded++;
+						
+						
+					}
+				}
+			}
+		}
+	}
+	
+	public static class DisplayThread extends SwingWorker<String, Object> {
+
+		
+		public DisplayThread() {
+
+		}
+		
+		@Override
+		protected String doInBackground() throws Exception {
+			// TODO Auto-generated method stub
+			if(imgData.get(fileIndex+1) != null) {
+				bNext = true;
+				fileIndex++;
+				loadDeck();
+
+			}
+			this.cancel(true);
+			
+			return "haha";
+		}
+	}
+	
 }
+
+
+
