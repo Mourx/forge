@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +38,8 @@ public class Classifier {
 	static int buffLoaded = 0;
 	static int prevLoaded = 0;
 	static Map<Integer,ImageData> imgData = new HashMap<Integer,ImageData>();
+	static Map<Integer,DeckScore> scores = new HashMap<Integer,DeckScore>();
+	static float deckScore = 0;
 	static int currentLoad = 0;
 	static int prevLoad = 0;
 	static JLabel highlight;
@@ -51,6 +54,8 @@ public class Classifier {
 		loadDeck();
 		LoadingThread thread = new LoadingThread();
 		thread.execute();
+		BackupThread bth = new BackupThread();
+		bth.execute();
 	}
 	
 	
@@ -76,9 +81,10 @@ public class Classifier {
 				URL url;
 				try {
 					url = new URL(json.get(i).image_uris.normal);
-					
-					iD.buffImgs.add(ImageIO.read(url));
-					iD.imgs.add(new ImageIcon(iD.buffImgs.get(i).getScaledInstance(CARD_WIDTH, CARD_HEIGHT, Image.SCALE_SMOOTH)));
+					if(!iD.buffImgs.containsKey(url)) {
+						iD.buffImgs.put(url,ImageIO.read(url));
+					}
+					iD.imgs.add(new ImageIcon(iD.buffImgs.get(url).getScaledInstance(CARD_WIDTH, CARD_HEIGHT, Image.SCALE_SMOOTH)));
 				}catch (IOException er) {
 					// TODO Auto-generated catch block
 					er.printStackTrace();
@@ -113,16 +119,34 @@ public class Classifier {
 			
 		};
 		JFrame frame = new JFrame("My Second GUI");
-		JButton button = new JButton("Next!");
-		button.addActionListener(new ActionListener() {
+		JButton nextButton = new JButton("Next!");
+		nextButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				refreshTable();
+				nextEntry();
 				if(bNext == true) {
 					LoadingThread th = new LoadingThread();
 					th.execute();
+					bNext = false;
 				}
+			}
+		});
+		JButton backButton = new JButton("BACK!");
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				prevEntry();
+			}
+		});
+		
+		JButton saveButton = new JButton("Finish :)");
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				//saveScores();
 			}
 		});
 		
@@ -140,15 +164,27 @@ public class Classifier {
 				int col = table.columnAtPoint(p);
 				if ((row > -1 && row < table.getRowCount()) && (col > -1 && col < table.getColumnCount())) {
 					int index = row*COLUMNS + col;	
-					highlight.setIcon(new ImageIcon(imgData.get(fileIndex).buffImgs.get(index).getScaledInstance(INSPECT_WIDTH, INSPECT_HEIGHT, Image.SCALE_SMOOTH)));
+					try {
+						URL url = new URL(decks.get(keys.get(index)).get(index).image_uris.normal);
+						highlight.setIcon(new ImageIcon(imgData.get(fileIndex).buffImgs.get(url).getScaledInstance(INSPECT_WIDTH, INSPECT_HEIGHT, Image.SCALE_SMOOTH)));
+					} catch (MalformedURLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
 				}
 			}
 		});
 		
+		
 		table.setPreferredSize(new Dimension(CARD_WIDTH*COLUMNS, CARD_HEIGHT*ROWS));
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(backButton);
+		buttonPanel.add(nextButton);
+		buttonPanel.add(saveButton);
 		frame.getContentPane().add(table,BorderLayout.WEST);
 		frame.getContentPane().add(highlight,BorderLayout.CENTER);
-		frame.getContentPane().add(button,BorderLayout.SOUTH);
+		frame.getContentPane().add(buttonPanel,BorderLayout.SOUTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1300,750);
 		frame.setVisible(true);
@@ -177,42 +213,88 @@ public class Classifier {
 
 				if(buffLoaded - fileIndex < BUFFER_SIZE/2) {
 					
-					if(decks.get(baseDecks.get(buffLoaded).getCanonicalPath()) == null) {
+					if(buffLoaded != fileIndex && imgData.get(buffLoaded) == null) {
 						loadData(buffLoaded);
 							
 					}
 					buffLoaded++;
 				}
+				
+			}
+		}
+	}
+	
+	public static class BackupThread extends SwingWorker<String, Object> {
+
+		public BackupThread() {
+
+		}
+		
+		@Override
+		protected String doInBackground() throws Exception {
+			while(true) {
 				if(fileIndex - prevLoaded < BUFFER_SIZE/2) {
-					if(fileIndex - prevLoaded >= 0) {
+					if(fileIndex - prevLoaded >= 0 && prevLoaded >= 0) {
 						
-						if(decks.get(baseDecks.get(prevLoaded).getCanonicalPath()) == null) {
+						if(prevLoaded != fileIndex && imgData.get(prevLoaded) == null) {
 							loadData(prevLoaded);
 							
-						}
+						}						
 						prevLoaded++;
-						
-						
+					} else {
+						prevLoaded++;
+						if(prevLoaded>=fileIndex) {
+							prevLoaded = fileIndex-1;
+						}
 					}
 				}
 			}
 		}
 	}
 	
-	
-	public static void refreshTable() {
+	public static void nextEntry() {
 		if(imgData.containsKey(fileIndex+1)) {
-			fileIndex++;
-			loadDeck();
+			scores.remove(fileIndex);
+			scores.put(fileIndex, new DeckScore(baseDecks.get(fileIndex).getName(),deckScore));
 			if(imgData.containsKey(fileIndex-BUFFER_SIZE/2)) {
 				imgData.remove(fileIndex - BUFFER_SIZE/2);
 			}
+			if(fileIndex-prevLoaded == BUFFER_SIZE/2) {
+				prevLoaded++;
+			}
+			fileIndex++;
+			loadDeck();
+			
 		
 			
 		}
 		System.out.println("Index: " + fileIndex + ", Buffered: "+buffLoaded);
 	}
 	
+	public static void prevEntry() {
+		if(imgData.containsKey(fileIndex-1)) {
+			scores.remove(fileIndex);
+			scores.put(fileIndex, new DeckScore(baseDecks.get(fileIndex).getName(),deckScore));
+			if(imgData.containsKey(fileIndex+BUFFER_SIZE/2)) {
+				imgData.remove(fileIndex + BUFFER_SIZE/2);
+			}
+			if(buffLoaded - fileIndex == BUFFER_SIZE/2) {
+				buffLoaded--;
+			}
+			prevLoaded--;
+			fileIndex--;
+			loadDeck();
+			
+			
+		
+			
+		}
+		System.out.println("Index: " + fileIndex + ", Previous: "+prevLoaded);
+	}
+	
+	public static void saveScores() {
+		//save deckScores map to a file
+	}
 }
 
 
