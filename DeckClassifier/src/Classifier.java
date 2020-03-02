@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -37,11 +36,10 @@ public class Classifier {
 	static int BUFFER_SIZE = 6; // 3 decks either side loaded
 	static int buffLoaded = 0;
 	static int prevLoaded = 0;
-	static ArrayList<ImageData> imgData = new ArrayList<ImageData>();
+	static Map<Integer,ImageData> imgData = new HashMap<Integer,ImageData>();
 	static int currentLoad = 0;
 	static int prevLoad = 0;
 	static JLabel highlight;
-	static DisplayThread thread = new DisplayThread();
 	static boolean bBuffering = false;
 	
 	
@@ -86,7 +84,7 @@ public class Classifier {
 					er.printStackTrace();
 				}
 			}
-			imgData.add(iD);
+			imgData.put(loadIndex,iD);
 		}
 		catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -120,7 +118,7 @@ public class Classifier {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				thread.execute();
+				refreshTable();
 				if(bNext == true) {
 					LoadingThread th = new LoadingThread();
 					th.execute();
@@ -175,12 +173,8 @@ public class Classifier {
 		
 		@Override
 		protected String doInBackground() throws Exception {
-			// TODO Auto-generated method stub
-			bBuffering = true;
 			while(true) {
-				if(thread.isDone()) {
-					thread.cancel(true);
-				}
+
 				if(buffLoaded - fileIndex < BUFFER_SIZE/2) {
 					
 					if(decks.get(baseDecks.get(buffLoaded).getCanonicalPath()) == null) {
@@ -205,26 +199,18 @@ public class Classifier {
 		}
 	}
 	
-	public static class DisplayThread extends SwingWorker<String, Object> {
-
-		
-		public DisplayThread() {
-
-		}
-		
-		@Override
-		protected String doInBackground() throws Exception {
-			// TODO Auto-generated method stub
-			if(imgData.get(fileIndex+1) != null) {
-				bNext = true;
-				fileIndex++;
-				loadDeck();
-
+	
+	public static void refreshTable() {
+		if(imgData.containsKey(fileIndex+1)) {
+			fileIndex++;
+			loadDeck();
+			if(imgData.containsKey(fileIndex-BUFFER_SIZE/2)) {
+				imgData.remove(fileIndex - BUFFER_SIZE/2);
 			}
-			this.cancel(true);
+		
 			
-			return "haha";
 		}
+		System.out.println("Index: " + fileIndex + ", Buffered: "+buffLoaded);
 	}
 	
 }
