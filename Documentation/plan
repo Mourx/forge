@@ -1,0 +1,17 @@
+Forge AI evaluation numbers:
+magic numbers in getScoreForGameStateImpl
+  can be used to weight:
+    my cards in hand
+    their cards in hand
+    my life
+    their life
+    summoning sick creatures
+  EvalCard:
+    weight by cmc
+  CreatureEvaluator.evaluateCreature:
+    considers P/T
+    considers keywords
+  CreatureEvaluator.evaluateSpellAbility:
+    considers pump spells/abilities
+
+    

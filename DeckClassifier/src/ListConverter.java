@@ -172,6 +172,26 @@ public class ListConverter {
 			
 		}
 	}
+	
+	public void ReadFromJson(String deckname) {
+		File file = new File("MtgJson/"+deckname);
+		Scanner scanner;
+		try {
+			scanner = new Scanner(file);
+			GsonBuilder gsonB = new GsonBuilder();
+			Gson gson = gsonB.create();
+			while(scanner.hasNextLine()) {
+				String data = scanner.nextLine();
+				CardDataJson json = gson.fromJson(data,CardDataJson.class);
+				jsonLists.add(json);
+			}
+		} catch ( IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
 	public ArrayList<CardDataJson> getDeckList(){
 		return jsonLists;
 	}
