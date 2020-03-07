@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -12,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -192,15 +194,28 @@ public class Classifier {
 		infoPanel = new JPanel();
 		JLabel spdDescrip = new JLabel("Speed Rating",JLabel.CENTER);
 		speedSlider = new JSlider(0,10,5);
-		infoPanel.add(speedSlider);
+		speedSlider.setMinorTickSpacing(1);
+		speedSlider.setMajorTickSpacing(2);
+		speedSlider.setPaintTicks(true);
+		speedSlider.setPaintLabels(true);
+		Hashtable labelTable = new Hashtable();
+		labelTable.put(new Integer(0), new JLabel("0"));
+		labelTable.put(new Integer(5), new JLabel("5"));
+		labelTable.put(new Integer(10), new JLabel("10"));
+		speedSlider.setLabelTable(labelTable);
+		JPanel speedPanel = new JPanel();
+		infoPanel.setLayout(new BorderLayout());
+		infoPanel.add(highlight,BorderLayout.NORTH);
+		speedPanel.add(speedSlider);
+		speedPanel.add(spdDescrip);
+		infoPanel.add(speedPanel,BorderLayout.CENTER);
 		buttonPanel.add(nextButton);
 		buttonPanel.add(saveButton);
-		frame.getContentPane().add(infoPanel,BorderLayout.EAST);
+		frame.getContentPane().add(infoPanel,BorderLayout.CENTER);
 		frame.getContentPane().add(table,BorderLayout.WEST);
-		frame.getContentPane().add(highlight,BorderLayout.CENTER);
 		frame.getContentPane().add(buttonPanel,BorderLayout.SOUTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1500,750);
+		frame.setSize(1300,750);
 		frame.setVisible(true);
 	}
 
