@@ -8,10 +8,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 import com.google.gson.*;
+
+import com.google.gson.reflect.TypeToken;
 
 public class ListConverter {
 	ArrayList<CardData> deckList = new ArrayList<CardData>();
@@ -61,6 +64,7 @@ public class ListConverter {
 			for(int j = 0;j<deckList.get(i).count;j++) {
 				try {
 					String str = deckList.get(i).name;
+					str = str.split("\\/\\/")[0];
 					str = str.replaceAll("\\s", "-");
 					URL obj = new URL("https://api.scryfall.com/cards/named?exact=" + str);
 					HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -82,7 +86,14 @@ public class ListConverter {
 						String fullCleaned = response.toString().replaceAll("—", "-"); //formatting made em dash an error symbol
 						fullCleaned = fullCleaned.toString().replaceAll("\u0027", "");
 						fullCleaned = fullCleaned.toString().replaceAll("\\+", "");
-						CardDataJson json = gson.fromJson(fullCleaned, CardDataJson.class);
+						CardDataJson json;
+						CardFacesData strings;
+						if(fullCleaned.contains("card_faces")) {
+							strings = gson.fromJson(fullCleaned, CardFacesData.class);
+							json = strings.card_faces.get(0);
+						}else {
+							json = gson.fromJson(fullCleaned, CardDataJson.class);
+						}
 						Map<String,String[]> keywords = GetKeywords(json.name);
 						json.keywords = keywords;
 						String data = gson.toJson(json);

@@ -24,7 +24,7 @@ public class Classifier {
 	static boolean bNext;
 	static File[] files;
 	static ArrayList<File> baseDecks = new ArrayList<File>();
-	static int fileIndex = 0;
+	static int fileIndex = 295;
 	static int ROWS = 5;
 	static int COLUMNS = 12;
 	static int CARD_WIDTH = 90;
@@ -36,7 +36,7 @@ public class Classifier {
 	static ArrayList<String> keys = new ArrayList<String>();
 	static String currentDeck = "";
 	static JTable table;
-	static int BUFFER_SIZE = 1; // 3 decks either side loaded
+	static int BUFFER_SIZE = 400; // 3 decks either side loaded
 	static int buffLoaded = 0;
 	static int prevLoaded = 0;
 	static Map<Integer,ImageData> imgData = new HashMap<Integer,ImageData>();
@@ -56,14 +56,23 @@ public class Classifier {
 		loadNextSet();
 		makeGui();
 		loadDeck();
-
 		
 	}
 	
 	public static void loadNextSet() {
 		for(int i = 0;i<BUFFER_SIZE;i++) {
-			loadData(i);
-			System.out.println("Processed " + i + ", Name: " + keys.get(i));
+			if(i%20 == 0) {
+				for(int j = i-20;j<i;j++) {
+					imgData.remove(j);
+					decks.remove(j);
+				}
+			}
+			if(i<baseDecks.size()) {
+				loadData(i);
+				System.out.println("Processed " + i + ", Name: " + keys.get(i));
+			}else {
+				System.out.println("No More Data!");
+			}
 		}
 	}
 	
