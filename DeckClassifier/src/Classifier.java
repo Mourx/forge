@@ -14,13 +14,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 public class Classifier {
 
@@ -39,20 +36,20 @@ public class Classifier {
 	static ArrayList<String> keys = new ArrayList<String>();
 	static String currentDeck = "";
 	static JTable table;
-	static int BUFFER_SIZE = 3; // 3 decks either side loaded
+	static int BUFFER_SIZE = 10; // 3 decks either side loaded
 	static int buffLoaded = 0;
 	static int prevLoaded = 0;
 	static Map<Integer,ImageData> imgData = new HashMap<Integer,ImageData>();
 	static Map<Integer,DeckScore> scores = new HashMap<Integer,DeckScore>();
+	static ArrayList<JRadioButton> radios = new ArrayList<JRadioButton>();
 	static int deckScore = 5;
 	static int currentLoad = 0;
 	static int prevLoad = 0;
 	static JFrame frame;
 	static JLabel highlight;
 	static JPanel infoPanel;
-	static JSlider speedSlider;
 	static boolean bBuffering = false;
-	
+	static LoadingThread th = new LoadingThread();
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -60,6 +57,8 @@ public class Classifier {
 		loadNextSet(fileIndex);
 		makeGui();
 		loadDeck();
+		th.execute();
+		
 		
 	}
 	
@@ -201,26 +200,23 @@ public class Classifier {
 		
 		infoPanel = new JPanel();
 		JLabel spdDescrip = new JLabel("Speed Rating",JLabel.CENTER);
-		speedSlider = new JSlider(0,10,5);
-		speedSlider.setMinorTickSpacing(1);
-		speedSlider.setMajorTickSpacing(2);
-		speedSlider.setPaintTicks(true);
-		speedSlider.setPaintLabels(true);
 		
-		speedSlider.addChangeListener(new ChangeListener() {
-		      public void stateChanged(ChangeEvent e) {
-		        deckScore = speedSlider.getValue();
-		      }
-		});
-		Hashtable labelTable = new Hashtable();
-		labelTable.put(new Integer(0), new JLabel("0"));
-		labelTable.put(new Integer(5), new JLabel("5"));
-		labelTable.put(new Integer(10), new JLabel("10"));
-		speedSlider.setLabelTable(labelTable);
+
 		JPanel speedPanel = new JPanel();
+		ButtonGroup groupRadios = new ButtonGroup();
+		for(int i = 0;i<10;i++) {
+			JRadioButton b = new JRadioButton();
+			b.setText(""+(i+1));
+			radios.add(b);
+			speedPanel.add(radios.get(i));
+			groupRadios.add(b);
+		}
+		radios.get(5).setSelected(true);
+		
+		
+		
 		infoPanel.setLayout(new BorderLayout());
 		infoPanel.add(highlight,BorderLayout.NORTH);
-		speedPanel.add(speedSlider);
 		speedPanel.add(spdDescrip);
 		infoPanel.add(speedPanel,BorderLayout.CENTER);
 		buttonPanel.add(nextButton);
@@ -253,41 +249,55 @@ public class Classifier {
 	
 	public static class LoadingThread extends SwingWorker<String, Object> {
 
-		public LoadingThread() {
-
-		}
 		
 		@Override
 		protected String doInBackground() throws Exception {
-			while(true) {
-
-				if(buffLoaded - fileIndex < BUFFER_SIZE/2) {
-					
-					if(buffLoaded != fileIndex && imgData.get(buffLoaded) == null) {
-						loadData(buffLoaded);
-							
-					}
-					buffLoaded++;
-				}
-				
+			while(buffLoaded < fileIndex+BUFFER_SIZE) {
+				loadData(buffLoaded);
+				System.out.println("Loaded Deck: "+ buffLoaded);
+				buffLoaded++;
+				imgData.remove(fileIndex-1);
 			}
-		}
+			return "nice";
+							
+
+		}	
 	}
 	
 	
-	public static void nextEntry() {
+	public static void nextEntry() {			
+		
 		if(imgData.containsKey(fileIndex+1)) {
+			
+			if(th.isDone()) {
+				th = new LoadingThread();
+				th.execute();
+			}
+				
+			
 			scores.remove(fileIndex);
+			for(int i = 0;i<radios.size();i++) {
+				if(radios.get(i).isSelected()) {
+					deckScore = i+1;
+				}
+			}
 			scores.put(fileIndex, new DeckScore(baseDecks.get(fileIndex).getName(),deckScore));
 			fileIndex++;
 			loadDeck();		
 			
 		}
+		
 		System.out.println("Index: " + fileIndex + ", Buffered: "+buffLoaded);
 	}
 	
 	public static void saveScores() {
 		//save deckScores map to a file
+		scores.remove(fileIndex);
+		for(int i = 0;i<radios.size();i++) {
+			if(radios.get(i).isSelected()) {
+				deckScore = i+1;
+			}
+		}
 		scores.put(fileIndex, new DeckScore(baseDecks.get(fileIndex).getName(),deckScore));
 		File dir = new File("ScoresLog/");
 		int index = dir.listFiles().length;
