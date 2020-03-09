@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,6 +19,8 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 public class Classifier {
 
@@ -36,14 +39,15 @@ public class Classifier {
 	static ArrayList<String> keys = new ArrayList<String>();
 	static String currentDeck = "";
 	static JTable table;
-	static int BUFFER_SIZE = 20; // 3 decks either side loaded
+	static int BUFFER_SIZE = 3; // 3 decks either side loaded
 	static int buffLoaded = 0;
 	static int prevLoaded = 0;
 	static Map<Integer,ImageData> imgData = new HashMap<Integer,ImageData>();
 	static Map<Integer,DeckScore> scores = new HashMap<Integer,DeckScore>();
-	static float deckScore = 0;
+	static int deckScore = 5;
 	static int currentLoad = 0;
 	static int prevLoad = 0;
+	static JFrame frame;
 	static JLabel highlight;
 	static JPanel infoPanel;
 	static JSlider speedSlider;
@@ -137,7 +141,7 @@ public class Classifier {
 			}
 			
 		};
-		JFrame frame = new JFrame("My Second GUI");
+		frame = new JFrame("My Second GUI");
 		
 		JButton nextButton = new JButton("Next!");
 		nextButton.addActionListener(new ActionListener() {
@@ -161,7 +165,7 @@ public class Classifier {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				//saveScores();
+				saveScores();
 			}
 		});
 		
@@ -202,6 +206,12 @@ public class Classifier {
 		speedSlider.setMajorTickSpacing(2);
 		speedSlider.setPaintTicks(true);
 		speedSlider.setPaintLabels(true);
+		
+		speedSlider.addChangeListener(new ChangeListener() {
+		      public void stateChanged(ChangeEvent e) {
+		        deckScore = speedSlider.getValue();
+		      }
+		});
 		Hashtable labelTable = new Hashtable();
 		labelTable.put(new Integer(0), new JLabel("0"));
 		labelTable.put(new Integer(5), new JLabel("5"));
@@ -278,7 +288,24 @@ public class Classifier {
 	
 	public static void saveScores() {
 		//save deckScores map to a file
-		File scores = new File("ScoreLogs/")
+		scores.put(fileIndex, new DeckScore(baseDecks.get(fileIndex).getName(),deckScore));
+		File dir = new File("ScoresLog/");
+		int index = dir.listFiles().length;
+		String str = "ScoresLog/"+index+".txt";
+		File scoreTxt = new File(str);
+		try {
+			if(scoreTxt.createNewFile()) {
+				FileWriter writer = new FileWriter(str);
+				for(int i = 0;i<scores.size();i++) {
+					writer.write(scores.get(i).score+"\n");
+				}
+				writer.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		frame.dispose();
+		
 	}
 	
 	/*

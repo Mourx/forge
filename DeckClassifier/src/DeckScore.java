@@ -2,9 +2,9 @@
 public class DeckScore {
 
 	public String name;
-	public float score;
+	public int score;
 	
-	public DeckScore(String s, float f) {
+	public DeckScore(String s, int f) {
 		name = s;
 		score = f;
 	}
