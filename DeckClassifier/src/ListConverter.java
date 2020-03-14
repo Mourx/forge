@@ -151,9 +151,22 @@ public class ListConverter {
 									keys.put(div[0], words);
 									}
 								}else {
-									keys.put(div[0],null);
+									String[] tr = {"True"};
+									keys.put(div[0],tr);
 								}
 							}
+						}
+					}
+					else if(data.startsWith("K:")) {
+						
+						String[] datarray = data.split(":");
+						if(datarray.length>2) {
+							String[] costs = {datarray[2].replaceAll("\\s+","")};
+							keys.put(datarray[1],costs);
+						}else {
+							data = datarray[1];
+							String[] tr = {"true"};
+							keys.put(data,tr);
 						}
 					}
 				}

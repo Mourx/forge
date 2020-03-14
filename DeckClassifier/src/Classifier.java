@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -48,6 +50,8 @@ public class Classifier {
 	static JFrame frame;
 	static JLabel highlight;
 	static JPanel infoPanel;
+	static JButton saveButton;
+	static int REQUIRED_TO_SAVE = 10;
 	static boolean bBuffering = false;
 	static LoadingThread th = new LoadingThread();
 	
@@ -159,7 +163,7 @@ public class Classifier {
 		 * prevEntry(); } });
 		 */
 		
-		JButton saveButton = new JButton("Finish :)");
+		saveButton = new JButton("Finish :)");
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -221,10 +225,19 @@ public class Classifier {
 		infoPanel.add(speedPanel,BorderLayout.CENTER);
 		buttonPanel.add(nextButton);
 		buttonPanel.add(saveButton);
+		saveButton.setVisible(false);
 		frame.getContentPane().add(infoPanel,BorderLayout.CENTER);
 		frame.getContentPane().add(table,BorderLayout.WEST);
 		frame.getContentPane().add(buttonPanel,BorderLayout.SOUTH);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(new WindowAdapter()
+		{
+		    public void windowClosing(WindowEvent e)
+		    {
+		        saveScores();
+		    }
+		});
+
 		frame.setSize(1300,750);
 		frame.setVisible(true);
 	}
@@ -283,7 +296,10 @@ public class Classifier {
 			}
 			scores.put(fileIndex, new DeckScore(baseDecks.get(fileIndex).getName(),deckScore));
 			fileIndex++;
-			loadDeck();		
+			loadDeck();	
+			if(fileIndex >= REQUIRED_TO_SAVE) {
+				saveButton.setVisible(true);
+			}
 			
 		}
 		
