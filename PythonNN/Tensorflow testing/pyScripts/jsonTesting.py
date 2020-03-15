@@ -1,35 +1,27 @@
 import json
 
-person = '{"name": "Bob", "languages": ["English","French"]}'
-person_dict = json.loads(person)
-
-print(person_dict)
-
-print(person_dict['languages'])
-
 data = []
-for line in open('Arcane Tempo.json'):
+names = json.load(open(names.json))
+mcosts = json.load(open('mana_costs.json'))
+types = json.load(open('types.json'))
+
+
+
+for line in open('Assassin.json'):
     data.append(json.loads(line))
+    
+for elements in data:
+    name = elements['name']
+    if name not in names:
+        names[name] = len(names)
+    mana_cost = elements['mana_cost']
+    if mana_cost not in mcosts:
+        mcosts[mana_cost] = len(mcosts)
+    cmc = int(elements['cmc'])
+    #type_line processing - split terms up?
+    
+    
+with open('names.json','w') as out:
+    json.dump(names,out)
 
 
-
-print(data[0]['name'])
-
-
-from keras.preprocessing.text import text_to_word_sequence
-from keras.preprocessing.text import one_hot
-from keras.preprocessing.text import hashing_trick
-
-for line in data:
-    name = line['name']
-    print(name)
-    words = set(text_to_word_sequence(name))
-    vocab_size = len(words)
-    print(vocab_size,words)
-    result = one_hot(name, round(vocab_size*1.3))
-    print(result)
-
-    result = hashing_trick(name, round(vocab_size*1.3), hash_function='md5')
-    print(result)
-
-#input type: [nameValue,manaCost,cmc,Type,Color,Power,Toughness,keywordsBin]
