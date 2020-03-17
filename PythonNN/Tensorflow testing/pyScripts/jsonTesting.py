@@ -4,10 +4,13 @@ data = [] #lines of json for the deck
 names = json.load(open('names.json')) #name dictionary
 mcosts = json.load(open('mana_costs.json')) #mcosts dictionary
 cmc = [] #int list
-types = json.load(open('types.json')) # typing dictionary
+supers = json.load(open('supertypes.json'))
+types = json.load(open('types.json')) # typing dicionary
+subs = json.load(open('subtypes.json'))
 pColors = ['W','U','B','R','G']
 colors = '1' # string that reps a 5 digits binary chromosome (WUBRG) activation
 fullDeck = []
+
 
 for line in open('Arcane Tempo.json'):
     data.append(json.loads(line))
@@ -32,7 +35,45 @@ for elements in data:
     cmc = int(elements['cmc'])
     
     #type_line processing - split terms up?
-
+    typeline = '1'
+    words = elements['type_line']
+    words = words.replace("-","")
+    words = words.replace("  "," ")
+    wordArray = words.split(" ")
+    #supertypes
+    for t in supers:
+        if t in wordArray:
+            typeline = typeline + '1'
+            wordArray.remove(t)
+        else:
+            typeline = typeline + "0"
+    #regular types
+    for t in types:
+        if t in wordArray:
+            typeline = typeline + '1'
+            wordArray.remove(t)
+        else:
+            typeline = typeline + "0"
+    eString = ''
+    if len(wordArray) == 0:
+        typeline = typeline + "000000000000"
+    else:
+        for s in subs:
+            if s in wordArray:
+                string = str(subs[s])
+                if len(string) == 1:
+                    string = '00' + string
+                elif len(string) == 2:
+                    string = '0' + string
+                eString = eString + string
+    while len(eString) < 12:
+        eString = eString + '0'
+    typeline = typeline + eString
+    if len(typeline) == 25:
+        print('TypeLine correct length')
+        eType_line = int(typeline)
+    else:
+        eType_line = 1000000000000000000000000
     #colors as binary chromosomes for WUBRG
     colors = '1'
     color = elements['colors']
@@ -69,14 +110,17 @@ for elements in data:
     totals['name'] = eName
     totals['mana_cost'] = eMana_cost
     totals['cmc'] = cmc
-    #totals['type_line'] = eType_line
+    totals['type_line'] = eType_line
     totals['colors'] = eColors
     totals['power'] = ePower
     totals['toughness'] = eTough
     
     fullDeck.append(totals)
 
-print(fullDeck)
+#print(fullDeck)
+with open('fulldeck.json','w') as out:
+    json.dump(fullDeck,out)
+    
 with open('names.json','w') as out:
     json.dump(names,out)
 with open('mana_costs.json','w') as out:
