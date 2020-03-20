@@ -88,7 +88,7 @@ public class ListConverter {
 						fullCleaned = fullCleaned.toString().replaceAll("\\+", "");
 						CardDataJson json;
 						CardFacesData strings;
-						if(fullCleaned.contains("card_faces")) {
+						if(fullCleaned.contains("card_faces") && fullCleaned.contains("\"layout\":\"transform\"")) {
 							strings = gson.fromJson(fullCleaned, CardFacesData.class);
 							json = strings.card_faces.get(0);
 						}else {
@@ -130,6 +130,7 @@ public class ListConverter {
 				while(scan.hasNextLine()) {
 					String data = scan.nextLine();
 					if(data.startsWith("A:") || data.startsWith("T:")) {
+						/*
 						data = data.split(":")[1];
 						String[] abilities = data.split("\\|");
 						for(int i = 0;i<abilities.length;i++) {
@@ -155,8 +156,8 @@ public class ListConverter {
 									keys.put(div[0],tr);
 								}
 							}
-						}
-					}
+						}*/
+					} 
 					else if(data.startsWith("K:")) {
 						
 						String[] datarray = data.split(":");

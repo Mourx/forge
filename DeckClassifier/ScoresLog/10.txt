@@ -1,0 +1,89 @@
+Angrath, Minotaur Pirate.dck : 2
+Anthousas Army.dck : 4
+Arcane Tempo.dck : 6
+Army of Entropy.dck : 8
+Assassin.dck : 10
+Assemble Victory.dck : 5
+Azorius Advance.dck : 5
+Azorius Ascendant.dck : 6
+Azorius Guild Kit.dck : 5
+Battalion.dck : 6
+Battle Blitz.dck : 4
+Battle Cries.dck : 5
+Battle Surge.dck : 4
+Bestial Strength.dck : 3
+Blades of Victory.dck : 5
+Blazing Beasts of Myth.dck : 7
+Blood And Fire.dck : 6
+Boros Battalion.dck : 2
+Boros Guild Kit.dck : 2
+Bound by Strength.dck : 5
+Brave the Battle.dck : 4
+Breath of Fire.dck : 6
+Call of Blood.dck : 4
+Carnival of Blood.dck : 3
+Chandra, Bold Pyromancer.dck : 7
+Chandra, Pyrogenius.dck : 4
+Charge of the Boros.dck : 3
+Code of the Orzhov.dck : 4
+Concerted Effort.dck : 5
+Conquering Hordes.dck : 3
+Core Set 2019 Welcome Deck BG.dck : 8
+Core Set 2019 Welcome Deck BR.dck : 6
+Core Set 2019 Welcome Deck GU.dck : 8
+Core Set 2019 Welcome Deck GW.dck : 7
+Core Set 2019 Welcome Deck RG.dck : 6
+Core Set 2019 Welcome Deck RW.dck : 5
+Core Set 2019 Welcome Deck UB.dck : 6
+Core Set 2019 Welcome Deck UR.dck : 5
+Core Set 2019 Welcome Deck WB.dck : 6
+Core Set 2019 Welcome Deck WU.dck : 7
+Counter Surge.dck : 8
+Critical Mass.dck : 6
+Cruel Plots.dck : 5
+Crusher.dck : 7
+Cunning Plan.dck : 4
+Dangerous Knowledge.dck : 6
+Dark Devotion.dck : 5
+Dark Sacrifice.dck : 4
+Deadly Discovery.dck : 8
+Deadspread.dck : 3
+Death March.dck : 7
+Death Reaper.dck : 6
+Death's Beginning.dck : 7
+Deathfed.dck : 6
+Deathly Dominion.dck : 5
+Deaths Encroach.dck : 8
+Deep Freeze.dck : 6
+Demonic Deals.dck : 7
+Depths of Power.dck : 5
+Desperate Stand.dck : 4
+Devotion to Darkness.dck : 6
+Devouring Skies.dck : 7
+Dimir Dementia.dck : 8
+Dimir Guild Kit.dck : 9
+Dimir Intrigues.dck : 7
+Disrupter.dck : 6
+Domain.dck : 7
+Domri, City Smasher.dck : 5
+Doom Inevitable.dck : 6
+Dovin, Architect of Law.dck : 5
+Eldrazi Assault.dck : 3
+Eldritch Onslaught.dck : 4
+Elementals Path.dck : 7
+Elvish Predation.dck : 6
+Elvish Rage.dck : 5
+Enlightened Mastery.dck : 8
+Entangling Webs.dck : 6
+Fate Blaster.dck : 6
+Fates Foreseen.dck : 7
+Favors From Nyx.dck : 6
+Feast of Flesh.dck : 7
+Fiendish Nature.dck : 5
+Fiery Dawn.dck : 6
+Fire Surge.dck : 5
+Flames Of The Dragon.dck : 6
+Forged in Battle.dck : 1
+Furious Forces.dck : 4
+Ghostly Tide.dck : 4
+Gideon, Martial Paragon.dck : 4

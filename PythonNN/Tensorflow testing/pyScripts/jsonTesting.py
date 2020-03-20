@@ -9,6 +9,8 @@ types = json.load(open('types.json')) # typing dicionary
 subs = json.load(open('subtypes.json'))
 pColors = ['W','U','B','R','G']
 colors = '1' # string that reps a 5 digits binary chromosome (WUBRG) activation
+keywords = json.load(open('keywords.json'))
+
 fullDeck = []
 
 
@@ -105,6 +107,17 @@ for elements in data:
             eTough = 0
         else:
             eTough = int(tough)
+
+    # process keywords
+    kwords = elements['keywords']
+    keywordTags = '1'
+    for k in keywords:
+        if k in kwords:
+            keywordTags = keywordTags + '1'
+        else:
+            keywordTags = keywordTags + '0' 
+    eKeywords = int(keywordTags)
+    
     #make a list
     totals = {}
     totals['name'] = eName
@@ -114,6 +127,7 @@ for elements in data:
     totals['colors'] = eColors
     totals['power'] = ePower
     totals['toughness'] = eTough
+    totals['keywords'] = eKeywords
     
     fullDeck.append(totals)
 

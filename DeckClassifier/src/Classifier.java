@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -27,6 +26,7 @@ public class Classifier {
 	static File[] files;
 	static ArrayList<File> baseDecks = new ArrayList<File>();
 	static int fileIndex = 0;
+	static int offset = 80;
 	static int ROWS = 5;
 	static int COLUMNS = 12;
 	static int CARD_WIDTH = 90;
@@ -56,8 +56,8 @@ public class Classifier {
 	static LoadingThread th = new LoadingThread();
 	
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
 		scanFiles();
+		//loadall(0);
 		loadNextSet(fileIndex);
 		makeGui();
 		loadDeck();
@@ -66,10 +66,27 @@ public class Classifier {
 		
 	}
 	
+	public static void loadall(int index) {
+		for(int i = index;i<400;i++) {
+			if(i%20 == 0) {
+				for(int j=i-20;j<i;j++) {
+					imgData.remove(j);
+				}
+			}
+			if(i<baseDecks.size()) {
+				loadData(i);
+				System.out.println("Processed " + i + ", Name: " + keys.get(i));
+				buffLoaded++;
+			}else {
+				System.out.println("No More Data!");
+			}
+		}
+	}
+	
 	public static void loadNextSet(int index) {
 		for(int i = index;i<BUFFER_SIZE;i++) {
 			if(i<baseDecks.size()) {
-				loadData(i);
+				loadData(i+offset);
 				System.out.println("Processed " + i + ", Name: " + keys.get(i));
 				buffLoaded++;
 			}else {
@@ -93,7 +110,7 @@ public class Classifier {
 		try {
 			decks.put(baseDecks.get(loadIndex).getCanonicalPath(), doDataThings(baseDecks.get(loadIndex)));
 			keys.add(baseDecks.get(loadIndex).getCanonicalPath());
-			ArrayList<CardDataJson> json = decks.get(keys.get(loadIndex));
+			ArrayList<CardDataJson> json = decks.get(keys.get(loadIndex-offset));
 			ImageData iD = new ImageData();
 			for(int i=0;i<json.size();i++) {
 				URL url;
@@ -105,14 +122,12 @@ public class Classifier {
 					}
 					
 				}catch (IOException er) {
-					// TODO Auto-generated catch block
 					er.printStackTrace();
 				}
 			}
 			imgData.put(loadIndex,iD);
 		}
 		catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -124,11 +139,10 @@ public class Classifier {
 		for(int i=0;i<json.size();i++) {
 			try {
 				URL url = new URL(json.get(i).image_uris.normal);
-				JLabel label = new JLabel(imgData.get(fileIndex).imgs.get(url)); 
+				JLabel label = new JLabel(imgData.get(fileIndex+offset).imgs.get(url)); 
 				label.setSize(CARD_WIDTH,CARD_HEIGHT);
 				table.setValueAt(label.getIcon(),i/COLUMNS,i%COLUMNS);
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -188,9 +202,8 @@ public class Classifier {
 					int index = row*COLUMNS + col;	
 					try {
 						URL url = new URL(decks.get(keys.get(fileIndex)).get(index).image_uris.normal);
-						highlight.setIcon(new ImageIcon(imgData.get(fileIndex).buffImgs.get(url).getScaledInstance(INSPECT_WIDTH, INSPECT_HEIGHT, Image.SCALE_SMOOTH)));
+						highlight.setIcon(new ImageIcon(imgData.get(fileIndex+offset).buffImgs.get(url).getScaledInstance(INSPECT_WIDTH, INSPECT_HEIGHT, Image.SCALE_SMOOTH)));
 					} catch (MalformedURLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					
@@ -265,11 +278,11 @@ public class Classifier {
 		
 		@Override
 		protected String doInBackground() throws Exception {
-			while(buffLoaded < fileIndex+BUFFER_SIZE) {
-				loadData(buffLoaded);
-				System.out.println("Loaded Deck: "+ buffLoaded);
+			while(buffLoaded+offset < fileIndex+offset+BUFFER_SIZE) {
+				loadData(buffLoaded+offset);
+				System.out.println("Loaded Deck: "+ buffLoaded+offset);
 				buffLoaded++;
-				imgData.remove(fileIndex-1);
+				imgData.remove(fileIndex+offset-1);
 			}
 			return "nice";
 							
@@ -280,7 +293,7 @@ public class Classifier {
 	
 	public static void nextEntry() {			
 		
-		if(imgData.containsKey(fileIndex+1)) {
+		if(imgData.containsKey(fileIndex+offset+1)) {
 			
 			if(th.isDone()) {
 				th = new LoadingThread();
@@ -288,13 +301,13 @@ public class Classifier {
 			}
 				
 			
-			scores.remove(fileIndex);
+			scores.remove(fileIndex+offset);
 			for(int i = 0;i<radios.size();i++) {
 				if(radios.get(i).isSelected()) {
 					deckScore = i+1;
 				}
 			}
-			scores.put(fileIndex, new DeckScore(baseDecks.get(fileIndex).getName(),deckScore));
+			scores.put(fileIndex+offset, new DeckScore(baseDecks.get(fileIndex+offset).getName(),deckScore));
 			fileIndex++;
 			loadDeck();	
 			if(fileIndex >= REQUIRED_TO_SAVE) {
@@ -308,13 +321,13 @@ public class Classifier {
 	
 	public static void saveScores() {
 		//save deckScores map to a file
-		scores.remove(fileIndex);
+		scores.remove(fileIndex+offset);
 		for(int i = 0;i<radios.size();i++) {
 			if(radios.get(i).isSelected()) {
 				deckScore = i+1;
 			}
 		}
-		scores.put(fileIndex, new DeckScore(baseDecks.get(fileIndex).getName(),deckScore));
+		scores.put(fileIndex+offset, new DeckScore(baseDecks.get(fileIndex+offset).getName(),deckScore));
 		File dir = new File("ScoresLog/");
 		int index = dir.listFiles().length;
 		String str = "ScoresLog/"+index+".txt";
@@ -323,7 +336,7 @@ public class Classifier {
 			if(scoreTxt.createNewFile()) {
 				FileWriter writer = new FileWriter(str);
 				for(int i = 0;i<scores.size();i++) {
-					writer.write(scores.get(i).score+"\n");
+					writer.write(baseDecks.get(i+offset).getName()+ " : " + scores.get(i+offset).score+"\n");
 				}
 				writer.close();
 			}
