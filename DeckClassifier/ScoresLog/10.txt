@@ -1,89 +1,270 @@
-Angrath, Minotaur Pirate.dck : 2
-Anthousas Army.dck : 4
-Arcane Tempo.dck : 6
-Army of Entropy.dck : 8
-Assassin.dck : 10
-Assemble Victory.dck : 5
-Azorius Advance.dck : 5
-Azorius Ascendant.dck : 6
-Azorius Guild Kit.dck : 5
-Battalion.dck : 6
-Battle Blitz.dck : 4
-Battle Cries.dck : 5
-Battle Surge.dck : 4
-Bestial Strength.dck : 3
-Blades of Victory.dck : 5
-Blazing Beasts of Myth.dck : 7
-Blood And Fire.dck : 6
-Boros Battalion.dck : 2
-Boros Guild Kit.dck : 2
-Bound by Strength.dck : 5
-Brave the Battle.dck : 4
-Breath of Fire.dck : 6
-Call of Blood.dck : 4
-Carnival of Blood.dck : 3
-Chandra, Bold Pyromancer.dck : 7
-Chandra, Pyrogenius.dck : 4
-Charge of the Boros.dck : 3
-Code of the Orzhov.dck : 4
-Concerted Effort.dck : 5
-Conquering Hordes.dck : 3
-Core Set 2019 Welcome Deck BG.dck : 8
-Core Set 2019 Welcome Deck BR.dck : 6
-Core Set 2019 Welcome Deck GU.dck : 8
-Core Set 2019 Welcome Deck GW.dck : 7
-Core Set 2019 Welcome Deck RG.dck : 6
-Core Set 2019 Welcome Deck RW.dck : 5
-Core Set 2019 Welcome Deck UB.dck : 6
-Core Set 2019 Welcome Deck UR.dck : 5
-Core Set 2019 Welcome Deck WB.dck : 6
-Core Set 2019 Welcome Deck WU.dck : 7
-Counter Surge.dck : 8
-Critical Mass.dck : 6
-Cruel Plots.dck : 5
-Crusher.dck : 7
-Cunning Plan.dck : 4
-Dangerous Knowledge.dck : 6
-Dark Devotion.dck : 5
-Dark Sacrifice.dck : 4
-Deadly Discovery.dck : 8
-Deadspread.dck : 3
-Death March.dck : 7
-Death Reaper.dck : 6
-Death's Beginning.dck : 7
-Deathfed.dck : 6
-Deathly Dominion.dck : 5
-Deaths Encroach.dck : 8
-Deep Freeze.dck : 6
-Demonic Deals.dck : 7
-Depths of Power.dck : 5
-Desperate Stand.dck : 4
-Devotion to Darkness.dck : 6
-Devouring Skies.dck : 7
-Dimir Dementia.dck : 8
-Dimir Guild Kit.dck : 9
-Dimir Intrigues.dck : 7
-Disrupter.dck : 6
-Domain.dck : 7
-Domri, City Smasher.dck : 5
-Doom Inevitable.dck : 6
-Dovin, Architect of Law.dck : 5
-Eldrazi Assault.dck : 3
-Eldritch Onslaught.dck : 4
-Elementals Path.dck : 7
-Elvish Predation.dck : 6
-Elvish Rage.dck : 5
-Enlightened Mastery.dck : 8
-Entangling Webs.dck : 6
-Fate Blaster.dck : 6
-Fates Foreseen.dck : 7
-Favors From Nyx.dck : 6
-Feast of Flesh.dck : 7
-Fiendish Nature.dck : 5
-Fiery Dawn.dck : 6
-Fire Surge.dck : 5
-Flames Of The Dragon.dck : 6
-Forged in Battle.dck : 1
-Furious Forces.dck : 4
-Ghostly Tide.dck : 4
-Gideon, Martial Paragon.dck : 4
+{"Angrath, Minotaur Pirate.json" : 2,
+"Anthousas Army.json" : 4,
+"Arcane Tempo.json" : 6,
+"Army of Entropy.json" : 8,
+"Assassin.json" : 10,
+"Assemble Victory.json" : 5,
+"Azorius Advance.json" : 5,
+"Azorius Ascendant.json" : 6,
+"Azorius Guild Kit.json" : 5,
+"Battalion.json" : 6,
+"Battle Blitz.json" : 4,
+"Battle Cries.json" : 5,
+"Battle Surge.json" : 4,
+"Bestial Strength.json" : 3,
+"Blades of Victory.json" : 5,
+"Blazing Beasts of Myth.json" : 7,
+"Blood And Fire.json" : 6,
+"Boros Battalion.json" : 2,
+"Boros Guild Kit.json" : 2,
+"Bound by Strength.json" : 5,
+"Brave the Battle.json" : 4,
+"Breath of Fire.json" : 6,
+"Call of Blood.json" : 4,
+"Carnival of Blood.json" : 3,
+"Chandra, Bold Pyromancer.json" : 7,
+"Chandra, Pyrogenius.json" : 4,
+"Charge of the Boros.json" : 3,
+"Code of the Orzhov.json" : 4,
+"Concerted Effort.json" : 5,
+"Conquering Hordes.json" : 3,
+"Core Set 2019 Welcome Deck BG.json" : 8,
+"Core Set 2019 Welcome Deck BR.json" : 6,
+"Core Set 2019 Welcome Deck GU.json" : 8,
+"Core Set 2019 Welcome Deck GW.json" : 7,
+"Core Set 2019 Welcome Deck RG.json" : 6,
+"Core Set 2019 Welcome Deck RW.json" : 5,
+"Core Set 2019 Welcome Deck UB.json" : 6,
+"Core Set 2019 Welcome Deck UR.json" : 5,
+"Core Set 2019 Welcome Deck WB.json" : 6,
+"Core Set 2019 Welcome Deck WU.json" : 7,
+"Counter Surge.json" : 8,
+"Critical Mass.json" : 6,
+"Cruel Plots.json" : 5,
+"Crusher.json" : 7,
+"Cunning Plan.json" : 4,
+"Dangerous Knowledge.json" : 6,
+"Dark Devotion.json" : 5,
+"Dark Sacrifice.json" : 4,
+"Deadly Discovery.json" : 8,
+"Deadspread.json" : 3,
+"Death March.json" : 7,
+"Death Reaper.json" : 6,
+"Deathfed.json" : 6,
+"Deathly Dominion.json" : 5,
+"Deaths Encroach.json" : 8,
+"Deep Freeze.json" : 6,
+"Demonic Deals.json" : 7,
+"Depths of Power.json" : 5,
+"Desperate Stand.json" : 4,
+"Devotion to Darkness.json" : 6,
+"Devouring Skies.json" : 7,
+"Dimir Dementia.json" : 8,
+"Dimir Guild Kit.json" : 9,
+"Dimir Intrigues.json" : 7,
+"Disrupter.json" : 6,
+"Domain.json" : 7,
+"Domri, City Smasher.json" : 5,
+"Doom Inevitable.json" : 6,
+"Dovin, Architect of Law.json" : 5,
+"Eldrazi Assault.json" : 3,
+"Eldritch Onslaught.json" : 4,
+"Elementals Path.json" : 7,
+"Elvish Predation.json" : 6,
+"Elvish Rage.json" : 5,
+"Enlightened Mastery.json" : 8,
+"Entangling Webs.json" : 6,
+"Fate Blaster.json" : 6,
+"Fates Foreseen.json" : 7,
+"Favors From Nyx.json" : 6,
+"Feast of Flesh.json" : 7,
+"Fiendish Nature.json" : 5,
+"Fiery Dawn.json" : 6,
+"Fire Surge.json" : 5,
+"Flames Of The Dragon.json" : 6,
+"Forged in Battle.json" : 1,
+"Furious Forces.json" : 4,
+"Ghostly Tide.json" : 4,
+"Gideon, Martial Paragon.json" : 4,
+"Gideon, the Oathsworn.json" : 3,
+"Gifts of the Gods.json" : 6,
+"Gleeful Flames.json" : 1,
+"Going Rogue.json" : 1,
+"Golgari Deathcreep.json" : 5,
+"Golgari Growth.json" : 6,
+"Golgari Guild Kit.json" : 7,
+"Grab for Power.json" : 7,
+"Grave Advantage.json" : 8,
+"Grave Danger.json" : 5,
+"Grave Power.json" : 6,
+"Groundbreaker.json" : 7,
+"Gruul Goliaths.json" : 5,
+"Gruul Guild Kit.json" : 4,
+"Gruul Wilding.json" : 5,
+"Hazoret Aggro.json" : 1,
+"Hit The Ground Running.json" : 8,
+"Hold the Line.json" : 2,
+"Horrific Visions.json" : 4,
+"House Party.json" : 5,
+"Huatli, Dinosaur Knight.json" : 5,
+"Hunting Pack.json" : 4,
+"Infect and Defile.json" : 3,
+"Infernal Intervention.json" : 6,
+"Inspiration-Struck.json" : 8,
+"Into the Breach.json" : 1,
+"Izzet Gizmometry.json" : 2,
+"Izzet Guild Kit.json" : 2,
+"Izzet Ingenuity.json" : 3,
+"Jace, Arcane Strategist.json" : 5,
+"Jace, Ingenious Mind-Mage.json" : 2,
+"Jeskai Monks.json" : 5,
+"Jiang Yanggu.json" : 6,
+"Kami Reborn.json" : 6,
+"Kithkin Militia.json" : 3,
+"Kjeldoran Cunning.json" : 4,
+"Landslide Charge.json" : 4,
+"Life Boost.json" : 10,
+"Life Drain.json" : 4,
+"Lightforce.json" : 6,
+"Lightning Aggro.json" : 1,
+"Liliana, Death Wielder.json" : 4,
+"Liliana, the Necromancer.json"json" : 6,
+"Little Bashers.json" : 5,
+"Manipulative Monstrosities.json" : 7,
+"Mardu Raiders.json" : 1,
+"Massed Ranks.json" : 3,
+"Master Blaster.json" : 2,
+"Mercenaries.json" : 5,
+"Merrow Riverways.json" : 2,
+"Metalcraft.json" : 4,
+"Migraine.json" : 3,
+"Mind Swarm.json" : 5,
+"Mirromancy.json" : 4,
+"Mob Rule.json" : 1,
+"Monstrous Surprise.json" : 2,
+"Mortal Coil.json" : 6,
+"Mortals of Myth.json" : 3,
+"MTGA Arcane Inventions.json" : 6,
+"MTGA Auras of Majesty.json" : 5,
+"MTGA Chaos and Mayhem.json" : 3,
+"MTGA Dragons Fire.json" : 2,
+"MTGA Eternal Thirst.json" : 2,
+"MTGA Forests Might.json" : 6,
+"MTGA Graveyard Bash.json" : 4,
+"MTGA Jungle Secrets.json" : 2,
+"MTGA Primal Fury.json" : 3,
+"MTGA Saproling Swarm.json" : 5,
+"MTGA Strength in Numbers.json" : 3,
+"MTGA Tactical Assault.json" : 4,
+"MTGA Walk the Plank.json" : 2,
+"MTGA Wing and Claw.json" : 7,
+"MTGA Wrath of Mages.json" : 5,
+"Mu Yanling.json" : 6,
+"Myr of Mirrodin.json" : 5,
+"Mystical Might.json" : 6,
+"Nicol Bolas, the Deceiver.json" : 5,
+"Ninjutsu.json" : 5,
+"Nissa, Genesis Mage.json" : 6,
+"Nissa, Nature's Artisan.json" : 4,
+"Orzhov Guild Kit.json" : 6,
+"Orzhov Oppression.json" : 7,
+"Overkill.json" : 4,
+"Pantheon's Power.json" : 6,
+"Path of Blight.json" : 7,
+"Phyrexian Assault.json" : 5,
+"Phyrexian Poison.json" : 4,
+"Power of Prophecy.json" : 6,
+"Price Of Glory.json" : 5,
+"Psychic Labyrinth.json" : 6,
+"Pummel.json" : 4,
+"Radiant's Revenge.json" : 8,
+"Rakdos Bloodsport.json" : 3,
+"Rakdos Guild Kit.json" : 3,
+"Rakdos Raid.json" : 2,
+"Ral, Caller of Storms.json" : 6,
+"Rallying Cry.json" : 1,
+"Rat's Nest.json" : 4,
+"Ravaging Swarm.json" : 1,
+"Rebels Unite.json" : 6,
+"Reign of Vampirism.json" : 7,
+"Relentless Dead.json" : 5,
+"Relentless Rush.json" : 1,
+"Relic Breaker.json" : 7,
+"Repeat Performance.json" : 6,
+"Repel the Dark.json" : 5,
+"Replicator.json" : 6,
+"Rituals of Rebirth.json" : 9,
+"Rot from Within.json" : 1,
+"Sacred Assault.json" : 5,
+"Sacrificial Bam.json" : 4,
+"Second Sun Control.json" : 9,
+"Sarkhan, Dragonsoul.json" : 1,
+"Selesnya Guild Kit.json" : 7,
+"Selesnya Surge.json" : 5,
+"Selesnya United.json" : 6,
+"Shallow Graves.json" : 7,
+"Shamanism.json" : 6,
+"Sidestep.json" : 8,
+"Simic Guild Kit.json" : 4,
+"Simic Synthesis.json" : 5,
+"Slaughterhouse.json" : 2,
+"Sleeper.json" : 8,
+"Sliver Shivers.json" : 5,
+"Snowscape.json" : 8,
+"Sole Domination.json" : 3,
+"Solitary Fiends.json" : 6,
+"Spectral Legions.json" : 4,
+"Spectral Slam.json" : 5,
+"Spiraling Doom.json" : 4,
+"Spirit Flames.json" : 4,
+"Spiritcraft.json" : 5,
+"Stampede of Beasts.json" : 6,
+"Stampede.json" : 3,
+"Stampeding Hordes.json" : 2,
+"Sultai Schemers.json" : 7,
+"Sunburst.json" : 6,
+"Superabundance.json" : 2,
+"Surge of Resistance.json" : 3,
+"Surprise Attack.json" : 6,
+"Suspended Sentence.json" : 5,
+"Swarm and Slam.json" : 6,
+"Swarming Instinct.json" : 2,
+"Sweet Revenge.json" : 3,
+"Swift Justice.json" : 4,
+"Take to the Sky.json" : 3,
+"Teferi, Timebender.json" : 6,
+"Temur Avalanche.json" : 5,
+"Tezzeret, Cruel Machinist.json" : 6,
+"Tezzeret, Master of Metal.json" : 7,
+"The Spikes.json" : 2,
+"The Swarm.json" : 4,
+"The Wilds and the Deep.json" : 5,
+"Time Drain.json" : 5,
+"Tombstone.json" : 6,
+"Transference.json" : 2,
+"Trounce-O-Matic.json" : 4,
+"Truth Seekers.json" : 6,
+"Turnabout.json" : 5,
+"Twisted Reality.json" : 2,
+"Ultimate Sacrifice.json" : 2,
+"Unearthed Secrets.json" : 3,
+"Unflinching Assault.json" : 2,
+"United Assault.json" : 1,
+"Unlikely Alliances.json" : 2,
+"Untamed Wild.json" : 3,
+"Vampire Onslaught.json" : 1,
+"Vampiric Thirst.json" : 1,
+"Vehicle Rush.json" : 1,
+"Vicious Cycle.json" : 3,
+"Vivien of the Arkbow.json" : 6,
+"Vraska, Regal Gorgon.json" : 5,
+"Voracious Rage.json" : 7,
+"Vraska, Scheming Gorgon.json" : 6,
+"War of Attrition.json" : 3,
+"Warrior's Code.json"json" : 4,
+"Weapons and Wards.json" : 5,
+"Wicked Big.json" : 6,
+"Wild Rush.json" : 5,
+"Will Of The Masses.json" : 4,
+"Zendikar's Rage.json" : 2,
+"Zombies Unleashed.json" : 3}

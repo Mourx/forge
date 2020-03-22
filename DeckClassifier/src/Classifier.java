@@ -26,7 +26,7 @@ public class Classifier {
 	static File[] files;
 	static ArrayList<File> baseDecks = new ArrayList<File>();
 	static int fileIndex = 0;
-	static int offset = 80;
+	static int offset = 219;
 	static int ROWS = 5;
 	static int COLUMNS = 12;
 	static int CARD_WIDTH = 90;
