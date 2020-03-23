@@ -1,41 +1,43 @@
 import json
+import numpy
 
-data = [] #lines of json for the deck
-names = json.load(open('names.json')) #name dictionary
-mcosts = json.load(open('mana_costs.json')) #mcosts dictionary
-cmc = [] #int list
-supers = json.load(open('supertypes.json'))
-types = json.load(open('types.json')) # typing dicionary
-subs = json.load(open('subtypes.json'))
-pColors = ['W','U','B','R','G']
-colors = '1' # string that reps a 5 digits binary chromosome (WUBRG) activation
-keywords = json.load(open('keywords.json'))
 
-fullDeck = []
+
 
 def GetDeck(string):
+    data = [] #lines of json for the deck
+    names = json.load(open('names.json')) #name dictionary
+    mcosts = json.load(open('mana_costs.json')) #mcosts dictionary
+    cmc = [] #int list
+    supers = json.load(open('supertypes.json'))
+    types = json.load(open('types.json')) # typing dicionary
+    subs = json.load(open('subtypes.json'))
+    pColors = ['W','U','B','R','G']
+    colors = '1' # string that reps a 5 digits binary chromosome (WUBRG) activation
+    keywords = json.load(open('keywords.json'))
+    fullDeck = numpy.array([])
     for line in open(string):
         data.append(json.loads(line))
 
 
     for elements in data:
-        
+        fDeck = numpy.array([])
         
         # enter names into the dictionary, get UID out
         name = elements['name']
         if name not in names:
             names[name] = len(names)
         eName = names[name]
-        
+        fDeck = numpy.append(fDeck,eName)
         # enter mana costs (non converted) into dictionary, get UID out
         mana_cost = elements['mana_cost']
         if mana_cost not in mcosts:
             mcosts[mana_cost] = len(mcosts)
         eMana_cost = mcosts[mana_cost]
-        
+        fDeck = numpy.append(fDeck,eMana_cost)
         # cmc is simple conversion to int
         cmc = int(elements['cmc'])
-        
+        fDeck = numpy.append(fDeck,cmc)
         #type_line processing - split terms up?
         typeline = '1'
         words = elements['type_line']
@@ -44,33 +46,27 @@ def GetDeck(string):
         wordArray = words.split(" ")
         #supertypes
         for t in supers:
+            val = 0
             if t in wordArray:
+                val = 1
                 typeline = typeline + '1'
                 wordArray.remove(t)
             else:
                 typeline = typeline + "0"
+            fDeck = numpy.append(fDeck,val)
         #regular types
         for t in types:
+            val = 0
             if t in wordArray:
-                typeline = typeline + '1'
+                val = 1
                 wordArray.remove(t)
-            else:
-                typeline = typeline + "0"
-        eString = ''
-        if len(wordArray) == 0:
-            typeline = typeline + "000000000000"
+            fDeck = numpy.append(fDeck,val)
         else:
             for s in subs:
                 if s in wordArray:
-                    string = str(subs[s])
-                    if len(string) == 1:
-                        string = '00' + string
-                    elif len(string) == 2:
-                        string = '0' + string
-                    eString = eString + string
-        while len(eString) < 12:
-            eString = eString + '0'
-        typeline = typeline + eString
+                    fDeck = numpy.append(fDeck,subs[s])
+                else:
+                    fDeck = numpy.append(fDeck,0)
         if len(typeline) == 25:
             #print('TypeLine correct length')
             eType_line = int(typeline)
@@ -80,10 +76,13 @@ def GetDeck(string):
         colors = '1'
         color = elements['colors']
         for c in pColors:
+            val = 0
             if c in color:
+                val = 1
                 colors = colors + '1'
             else:
                 colors = colors + '0'
+            fDeck = numpy.append(fDeck,val)
         eColors = int(colors)
 
         # clean power from special effects
@@ -112,10 +111,13 @@ def GetDeck(string):
         kwords = elements['keywords']
         keywordTags = '1'
         for k in keywords:
+            val = 0
             if k in kwords:
+                val = 1
                 keywordTags = keywordTags + '1'
             else:
-                keywordTags = keywordTags + '0' 
+                keywordTags = keywordTags + '0'
+            fDeck = numpy.append(fDeck,val)
         eKeywords = int(keywordTags)
         
         #make a list
@@ -128,18 +130,13 @@ def GetDeck(string):
         totals['power'] = ePower
         totals['toughness'] = eTough
         totals['keywords'] = eKeywords
-        
-        fullDeck.append(eName)
-        fullDeck.append(eMana_cost)
-        fullDeck.append(cmc)
-        fullDeck.append(eType_line)
-        fullDeck.append(eColors)
-        fullDeck.append(ePower)
-        fullDeck.append(eTough)
-        fullDeck.append(eKeywords)
-        
+
+        fDeck = numpy.append(fDeck,ePower)
+        fDeck = numpy.append(fDeck,eTough)
+        fullDeck = numpy.append(fullDeck,[fDeck])
+    #print('FullDeck shape is: ' + str(fullDeck.shape) +', Deck name: '+ string)   
     return fullDeck
-    print(fullDeck)
+    
     #with open('fulldeck.json','w') as out:
     #    json.dump(fullDeck,out)
     #    
@@ -148,6 +145,7 @@ def GetDeck(string):
     #with open('mana_costs.json','w') as out:
     #    json.dump(mcosts,out)
 
-GetDeck('Arcane Tempo.json')
-   
+#dck = GetDeck('Angrath, Minotaur Pirate.json')
+#print(dck.shape)
+#print(dck)
 
