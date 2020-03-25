@@ -1,5 +1,5 @@
 Forge AI evaluation numbers:
-magic numbers in getScoreForGameStateImpl
+magic numbers in getScoreForGameStateImpl in GameStateEvaluater.class
   can be used to weight:
     my cards in hand
     their cards in hand
@@ -14,4 +14,7 @@ magic numbers in getScoreForGameStateImpl
   CreatureEvaluator.evaluateSpellAbility:
     considers pump spells/abilities
 
-    
+
+in forge/match/GameLobby.java there is function startGame()
+
+AiController constructor: define weights here?
