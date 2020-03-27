@@ -22,6 +22,8 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+
+import deckClassifier.ChoiceWeights;
 import forge.ai.ability.ChangeZoneAi;
 import forge.ai.ability.ExploreAi;
 import forge.ai.simulation.SpellAbilityPicker;
@@ -82,6 +84,7 @@ public class AiController {
     private boolean cheatShuffle;
     private boolean useSimulation;
     private SpellAbilityPicker simPicker;
+    private ChoiceWeights weights;
 
     public boolean canCheatShuffle() {
         return cheatShuffle;
@@ -124,10 +127,15 @@ public class AiController {
     }
 
     public AiController(final Player computerPlayer, final Game game0) {
+    	System.out.print("Init AI");
         player = computerPlayer;
         game = game0;
         memory = new AiCardMemory();
         simPicker = new SpellAbilityPicker(game, player);
+        
+        
+        Deck dck = game.getMatch().getPlayers().get(1).getDeck();
+        weights = new ChoiceWeights(dck);
     }
 
     private List<SpellAbility> getPossibleETBCounters() {

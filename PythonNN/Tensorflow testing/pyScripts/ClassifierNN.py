@@ -43,8 +43,6 @@ count = 0
 for e in decks:
      data = numpy.array([])
      data = load.GetDeck('C:/Users/Joel/Documents/Nottingham/Project/forge/PythonNN/Tensorflow testing/Decks/'+e)
-     #print('Data Shape is: '+ str(data.shape))
-     #print(len(data))
      data = numpy.reshape(data,(60,522))
      X_train = numpy.append(X_train,data)
      count = count+1
@@ -116,8 +114,8 @@ def LoadModel():
      # load weights into new model
      loaded_model.load_weights("model.h5")
      print("Loaded model from disk")
-     model.compile(loss="categorical_crossentropy",optimizer="Adam",metrics=["accuracy"])
-     scores = model.evaluate(X_train,Y_train,batch_size=32,verbose=2)
+     loaded_model.compile(loss="categorical_crossentropy",optimizer="Adam",metrics=["accuracy"])
+     scores = loaded_model.evaluate(X_train,Y_train,batch_size=32,verbose=2)
      print("Accuracy: %.2f%%" % scores[1]*100,flush=True)
-     
+
 LoadModel()

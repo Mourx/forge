@@ -59,6 +59,9 @@ public class ListConverter {
 		}
 	}
 	
+	public void setDeckList(ArrayList<CardData> d) {
+		deckList = d;
+	}
 	
 	public void getCards() {
 		for(int i = 0; i<deckList.size();i++) {
@@ -115,7 +118,7 @@ public class ListConverter {
 	public Map<String,String[]> GetKeywords(String name) {
 		Map<String,String[]> keys = new HashMap<String,String[]>();
 		name = name.replaceAll("\\s", "_");
-		File dir = new File("../../Forge/forge/forge-gui/res/cardsfolder/"+name.toLowerCase().charAt(0)+"/");
+		File dir = new File("../forge-gui/res/cardsfolder/"+name.toLowerCase().charAt(0)+"/");
 		for(File file:dir.listFiles()) {
 			if(file.getName().contains(name.toLowerCase()+".txt")) {
 				Scanner scan = null;

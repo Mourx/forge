@@ -6,8 +6,12 @@ import numpy
 
 def GetDeck(string):
     data = [] #lines of json for the deck
-    names = json.load(open('names.json')) #name dictionary
-    mcosts = json.load(open('mana_costs.json')) #mcosts dictionary
+    file = open('names.json')
+    names = json.load(file) #name dictionary
+    file.close()
+    file = open('mana_costs.json')
+    mcosts = json.load(file) #mcosts dictionary
+    file.close()
     cmc = [] #int list
     supers = json.load(open('supertypes.json'))
     types = json.load(open('types.json')) # typing dicionary
@@ -134,18 +138,20 @@ def GetDeck(string):
         fDeck = numpy.append(fDeck,ePower)
         fDeck = numpy.append(fDeck,eTough)
         fullDeck = numpy.append(fullDeck,[fDeck])
-    #print('FullDeck shape is: ' + str(fullDeck.shape) +', Deck name: '+ string)   
-    return fullDeck
-    
-    #with open('fulldeck.json','w') as out:
-    #    json.dump(fullDeck,out)
-    #    
-    #with open('names.json','w') as out:
-    #    json.dump(names,out)
-    #with open('mana_costs.json','w') as out:
-    #    json.dump(mcosts,out)
 
-#dck = GetDeck('Angrath, Minotaur Pirate.json')
+        
+            
+        #with open('fulldeck.json','w') as out:
+        #    json.dump(fullDeck,out)
+        #    
+        with open('names.json','w') as out:
+            json.dump(names,out)
+        with open('mana_costs.json','w') as out:
+            json.dump(mcosts,out)
+    return fullDeck
+
+
+dck = GetDeck('Angrath, Minotaur Pirate.json')
 #print(dck.shape)
 #print(dck)
 
