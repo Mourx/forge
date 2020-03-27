@@ -3,6 +3,8 @@ package deckClassifier;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
+import org.nd4j.linalg.api.ndarray.INDArray;
+
 import forge.deck.CardPool;
 import forge.deck.Deck;
 import forge.deck.DeckSection;
@@ -14,6 +16,7 @@ public class ChoiceWeights {
 
 	public float weight = 5.0f;
 	DataProcesser processor;
+	private INDArray classes;
 	
 	public ChoiceWeights(Deck d) {
 		ArrayList<CardData> deck = new ArrayList<CardData>();
@@ -26,5 +29,9 @@ public class ChoiceWeights {
 			deck.add(data);
 		}
 		processor = new DataProcesser(deck);
+		classes = processor.getClasses();
+		for(int i =0;i<classes.columns();i++) {
+			System.out.print(classes.getDouble(0, i) + " , ");
+		}
 	}
 }

@@ -12,19 +12,20 @@ public class ModelLoader {
 
 	MultiLayerNetwork network;
 	
+	public ModelLoader() {
+		
+	}
+	
 	public void LoadModel() {
 		try {
-			network = KerasModelImport.importKerasSequentialModelAndWeights("..\\..\\..\\..\\..\\..\\..\\..\\PythonNN\\Tensorflow testing\\pyScripts","PATH TO YOUR H5 FILE");
+			network = KerasModelImport.importKerasSequentialModelAndWeights("../../PythonNN/Tensorflow testing/pyScripts/model.json","../../PythonNN/Tensorflow testing/pyScripts/model.h5");
 		} catch (IOException | InvalidKerasConfigurationException | UnsupportedKerasConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void Predict() {
-		//INDArray data = new INDArray()
-		DataSet set = new DataSet();
-		network.predict(set);
-		//network.output(input)
+	public INDArray Predict(INDArray data) {
+		return network.output(data);
 	}
 }

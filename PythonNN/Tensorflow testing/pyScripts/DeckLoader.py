@@ -144,10 +144,10 @@ def GetDeck(string):
         #with open('fulldeck.json','w') as out:
         #    json.dump(fullDeck,out)
         #    
-        with open('names.json','w') as out:
-            json.dump(names,out)
-        with open('mana_costs.json','w') as out:
-            json.dump(mcosts,out)
+        # open('names.json','w') as out:
+        #    json.dump(names,out)
+        #with open('mana_costs.json','w') as out:
+        #    json.dump(mcosts,out)
     return fullDeck
 
 
