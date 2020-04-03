@@ -71,10 +71,10 @@ def NewModel():
      #X_trainShape = numpy.reshape(X_train,(60,8))
      print('done')
      model = Sequential()
-     model.add(Dense(80,input_dim=(60*522),name="Input_Layer",activation='relu'))
-     model.add(Dense(80,name="Hidden",activation='relu'))
-     model.add(Dense(80,name="Hidden2",activation='relu'))
-     model.add(Dense(40,name="Hidden3",activation='relu'))
+     model.add(Dense(50,input_dim=(60*522),name="Input_Layer",activation='relu'))
+     model.add(Dense(100,name="Hidden",activation='relu'))
+     model.add(Dense(20,name="Hidden2",activation='relu'))
+     model.add(Dense(20,name="Hidden3",activation='relu'))
      model.add(Dense(5,name="Output",activation='softmax'))
      model.summary()
      #to_cat serialises classification ( e.g. "on" values)
@@ -84,7 +84,7 @@ def NewModel():
      #train_test_split to do training sets test/train ratio of 10-20/80-90
      print(X_train.shape)
      model.compile(loss="categorical_crossentropy",optimizer="Adam",metrics=["accuracy"])
-     model.fit(X_train,Y_train,epochs=250,batch_size=128,verbose=2)
+     model.fit(X_train,Y_train,epochs=100,batch_size=256,verbose=2)
      scores = model.evaluate(X_train,Y_train,batch_size=32,verbose=2)
      print("Accuracy: %.2f%%" % scores[1]*100,flush=True)
      #model.compile

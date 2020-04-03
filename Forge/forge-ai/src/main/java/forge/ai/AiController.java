@@ -84,7 +84,6 @@ public class AiController {
     private boolean cheatShuffle;
     private boolean useSimulation;
     private SpellAbilityPicker simPicker;
-    private ChoiceWeights weights;
 
     public boolean canCheatShuffle() {
         return cheatShuffle;
@@ -135,7 +134,7 @@ public class AiController {
         
         
         Deck dck = game.getMatch().getPlayers().get(1).getDeck();
-        weights = new ChoiceWeights(dck);
+        player.weights = new ChoiceWeights(dck);
     }
 
     private List<SpellAbility> getPossibleETBCounters() {

@@ -90,9 +90,9 @@ public class GameStateEvaluator {
             score += myCards - aiPlayer.getMaxHandSize();
             myCards = aiPlayer.getMaxHandSize();
         }
-        score += 5 * myCards - 4 * theirCards;
+        score += aiPlayer.weights.MY_CARDS * myCards - aiPlayer.weights.OP_CARDS * theirCards;
         debugPrint("  My life: " + aiPlayer.getLife());
-        score += 2 * aiPlayer.getLife();
+        score += aiPlayer.weights.MY_LIFE * aiPlayer.getLife();
         int opponentIndex = 1;
         int opponentLife = 0;
         for (Player opponent : game.getPlayers()) {
@@ -102,7 +102,7 @@ public class GameStateEvaluator {
                 opponentIndex++;
             }
         }
-        score -= 2* opponentLife / (game.getPlayers().size() - 1);
+        score -= aiPlayer.weights.OP_LIFE * opponentLife / (game.getPlayers().size() - 1);
         int summonSickScore = score;
         PhaseType gamePhase = game.getPhaseHandler().getPhase();
         for (Card c : game.getCardsIn(ZoneType.Battlefield)) {
@@ -145,7 +145,7 @@ public class GameStateEvaluator {
             return 0;
         } else {
             // e.g. a 5 CMC permanent results in 200, whereas a 5/5 creature is ~225
-            int value = 50 + 30 * c.getCMC();
+            int value = (int) (50 + aiPlayer.weights.BASE_CMC * c.getCMC());
             if (c.isPlaneswalker()) {
                 value += 2 * c.getCounters(CounterType.LOYALTY);
             }

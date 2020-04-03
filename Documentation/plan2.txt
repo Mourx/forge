@@ -1,0 +1,6 @@
+plan part 2:
+add lines to make new entries
+maybe remove name?
+change labels to a,m,c
+add new decks to speed
+cross validation

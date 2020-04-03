@@ -17,19 +17,67 @@
  */
 package forge.game.player;
 
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
+
 import com.google.common.base.Function;
 import com.google.common.base.Predicates;
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+
+import deckClassifier.ChoiceWeights;
 import forge.LobbyPlayer;
 import forge.card.MagicColor;
-import forge.game.*;
+import forge.game.Game;
+import forge.game.GameActionUtil;
+import forge.game.GameEntity;
+import forge.game.GameEntityCounterTable;
+import forge.game.GameLogEntryType;
+import forge.game.GameStage;
+import forge.game.GameType;
+import forge.game.GlobalRuleChange;
 import forge.game.ability.AbilityFactory;
 import forge.game.ability.AbilityUtils;
 import forge.game.ability.ApiType;
 import forge.game.ability.effects.DetachedCardEffect;
-import forge.game.card.*;
+import forge.game.card.Card;
+import forge.game.card.CardCollection;
+import forge.game.card.CardCollectionView;
+import forge.game.card.CardDamageMap;
+import forge.game.card.CardFactoryUtil;
+import forge.game.card.CardLists;
+import forge.game.card.CardPredicates;
 import forge.game.card.CardPredicates.Presets;
-import forge.game.event.*;
+import forge.game.card.CardUtil;
+import forge.game.card.CardZoneTable;
+import forge.game.card.CounterType;
+import forge.game.event.GameEventCardSacrificed;
+import forge.game.event.GameEventLandPlayed;
+import forge.game.event.GameEventManaBurn;
+import forge.game.event.GameEventMulligan;
+import forge.game.event.GameEventPlayerControl;
+import forge.game.event.GameEventPlayerCounters;
+import forge.game.event.GameEventPlayerDamaged;
+import forge.game.event.GameEventPlayerLivesChanged;
+import forge.game.event.GameEventPlayerPoisoned;
+import forge.game.event.GameEventPlayerStatsChanged;
+import forge.game.event.GameEventShuffle;
+import forge.game.event.GameEventSurveil;
 import forge.game.keyword.Keyword;
 import forge.game.keyword.KeywordCollection;
 import forge.game.keyword.KeywordCollection.KeywordCollectionView;
@@ -57,11 +105,6 @@ import forge.util.MyRandom;
 import forge.util.TextUtil;
 import forge.util.collect.FCollection;
 import forge.util.collect.FCollectionView;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * <p>
@@ -154,6 +197,8 @@ public class Player extends GameEntity implements Comparable<Player> {
 
     private final AchievementTracker achievementTracker = new AchievementTracker();
     private final PlayerView view;
+    
+    public ChoiceWeights weights;
 
     public Player(String name0, Game game0, final int id0) {
         super(id0);

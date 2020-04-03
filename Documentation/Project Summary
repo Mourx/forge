@@ -1,0 +1,21 @@
+Project Summary:
+
+Ai to play the game:
+  Assessed inputs
+    too many inputs
+    too long to train
+      combinatorial problem
+    switch project focus
+Deck Classification AI:
+  think about inputs
+  create input data:
+    Create GUI to assess decks
+    get aggregated scores (canceled due to covid)
+    create neural network to assess decks
+    validate results
+Integrate into Forge
+  run this from the client
+  change AI weights (integrate into decision making)
+Validate Outcome (Modified AI)
+
+Document Forge a little
