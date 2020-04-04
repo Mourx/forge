@@ -15,6 +15,7 @@ public class ChoiceWeights {
 	public float MY_LIFE = 2.0f;
 	public float OP_LIFE = 2.0f;
 	public float BASE_CMC = 30.0f;
+	public float LAND = 100.0f;
 	DataProcesser processor;
 	private INDArray classes;
 	
