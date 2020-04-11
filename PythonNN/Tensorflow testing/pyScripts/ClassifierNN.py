@@ -16,7 +16,7 @@ from tensorflow.python.util import deprecation
 from sklearn.model_selection import KFold
 from keras.optimizers import SGD
 opt = SGD(lr=0.11)
-num_folds = 10;
+num_folds = 7;
 deprecation._PRINT_DEPRECATION_WARNINGS = False
 decks = {}
 classes = [1,2,3,4,5]
@@ -81,11 +81,11 @@ def NewModel():
      fold_no = 1
      for train, test in kfold.split(X_train,Y_train):
           model = Sequential()
-          model.add(Dense(50,input_dim=(60*522),name="Input_Layer",activation="relu"))
-          model.add(Dense(100,name="Hidden"))
-          model.add(Dense(80,name="Hidden2"))
-          model.add(Dense(30,name="Hidden3"))
-          model.add(Dense(5,name="Output",activation='softmax'))
+          model.add(Dense(250,input_dim=(60*522),name="Input_Layer",activation="sigmoid"))
+          model.add(Dense(200,name="Hidden",activation="sigmoid"))
+          model.add(Dense(160,name="Hidden2",activation="sigmoid"))
+          model.add(Dense(75,name="Hidden3",activation="sigmoid"))
+          model.add(Dense(5,name="Output",activation="softmax"))
           model.summary()
           #to_cat serialises classification ( e.g. "on" values)
           #sequential model
@@ -94,8 +94,8 @@ def NewModel():
           #train_test_split to do training sets test/train ratio of 10-20/80-90
           print(X_train.shape)
           model.compile(loss="categorical_crossentropy",optimizer="adam",metrics=["accuracy"])
-          model.fit(X_train[train],Y_train[train],epochs=50,batch_size=50,verbose=2)
-          scores = model.evaluate(X_train[test],Y_train[test],batch_size=50,verbose=0)
+          model.fit(X_train[train],Y_train[train],epochs=50,batch_size=128,verbose=2)
+          scores = model.evaluate(X_train[test],Y_train[test],batch_size=128,verbose=0)
           print("Accuracy: %.2f%%" % scores[1]*100,flush=True)
           fold_no = fold_no + 1
           models.append(model)
@@ -113,12 +113,16 @@ def NewModel():
           currIndex += 1
 
      model = models[bestIndex]
+     model.fit(X_train,Y_train,epochs=50,batch_size=128,verbose=2)
+     scores = model.evaluate(X_train,Y_train,batch_size=128,verbose=0)
+     print("Accuracy: %.2f%%" % scores[1]*100,flush=True)   
      #eval model
      #model.evaluate
      #xtest, ytest, batch size, verbose 2
      #print them out
      print(mScores)
      print(mScores[bestIndex])
+     print(scores[1])
      #save model somewhere model = JSON h5 = weights
      model_json = model.to_json()
      with open("model.json",'w') as json_file:
