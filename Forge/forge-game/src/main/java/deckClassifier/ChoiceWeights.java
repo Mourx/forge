@@ -31,8 +31,20 @@ public class ChoiceWeights {
 		}
 		processor = new DataProcesser(deck);
 		classes = processor.getClasses();
+		int maxClass = 0;
 		for(int i =0;i<classes.columns();i++) {
 			System.out.print(classes.getDouble(0, i) + " , ");
+			if(classes.getDouble(0,maxClass) < classes.getDouble(0,i)){
+				maxClass = i;
+			}
 		}
+		int difference = maxClass - 3;
+		// Modifies weights with a minor adjustment to change behaviour
+		MY_CARDS += difference * 0.5;
+		OP_CARDS += difference * 0.4;
+		MY_LIFE += difference * 0.2;
+		OP_LIFE += difference * 0.2;
+		BASE_CMC += difference * 3;
+		LAND += difference * 10;
 	}
 }
