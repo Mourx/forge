@@ -26,7 +26,7 @@ public class Classifier {
 	static File[] files;
 	static ArrayList<File> baseDecks = new ArrayList<File>();
 	static int fileIndex = 0;
-	static int offset = 219;
+	static int offset = 49+69+54+72;
 	static int ROWS = 5;
 	static int COLUMNS = 12;
 	static int CARD_WIDTH = 90;
@@ -330,13 +330,13 @@ public class Classifier {
 		scores.put(fileIndex+offset, new DeckScore(baseDecks.get(fileIndex+offset).getName(),deckScore));
 		File dir = new File("ScoresLog/");
 		int index = dir.listFiles().length;
-		String str = "ScoresLog/"+index+".txt";
+		String str = "ScoresLog/archetypes"+index+".txt";
 		File scoreTxt = new File(str);
 		try {
 			if(scoreTxt.createNewFile()) {
 				FileWriter writer = new FileWriter(str);
 				for(int i = 0;i<scores.size();i++) {
-					writer.write(baseDecks.get(i+offset).getName()+ " : " + scores.get(i+offset).score+"\n");
+					writer.write("\""+baseDecks.get(i+offset).getName()+ "\" : " + scores.get(i+offset).score+"\n");
 				}
 				writer.close();
 			}

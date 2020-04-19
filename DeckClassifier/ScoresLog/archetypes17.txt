@@ -1,0 +1,25 @@
+"Truth Seekers.dck" : 2
+"Turnabout.dck" : 1
+"Twisted Reality.dck" : 1
+"Ultimate Sacrifice.dck" : 1
+"Unearthed Secrets.dck" : 2
+"Unflinching Assault.dck" : 1
+"United Assault.dck" : 1
+"Unlikely Alliances.dck" : 1
+"Untamed Wild.dck" : 1
+"Vampire Onslaught.dck" : 1
+"Vampiric Thirst.dck" : 1
+"Vehicle Rush.dck" : 1
+"Vicious Cycle.dck" : 2
+"Vivien of the Arkbow.dck" : 2
+"Voracious Rage.dck" : 1
+"Vraska, Regal Gorgon.dck" : 2
+"Vraska, Scheming Gorgon.dck" : 2
+"War of Attrition.dck" : 1
+"Warrior's Code.dck" : 2
+"Weapons and Wards.dck" : 2
+"Wicked Big.dck" : 2
+"Wild Rush.dck" : 2
+"Will Of The Masses.dck" : 1
+"Zendikar's Rage.dck" : 2
+"Zombies Unleashed.dck" : 1

@@ -1,0 +1,151 @@
+"Jace, Ingenious Mind-Mage.dck" : 1
+"Jeskai Monks.dck" : 2
+"Jiang Yanggu.dck" : 2
+"Kami Reborn.dck" : 2
+"Kithkin Militia.dck" : 1
+"Kjeldoran Cunning.dck" : 2
+"Landslide Charge.dck" : 1
+"Life Drain.dck" : 1
+"Lightforce.dck" : 2
+"Lightning Aggro.dck" : 1
+"Liliana, Death Wielder.dck" : 1
+"Liliana, the Necromancer.dck" : 2
+"Little Bashers.dck" : 2
+"Manipulative Monstrosities.dck" : 3
+"Mardu Raiders.dck" : 1
+"Massed Ranks.dck" : 1
+"Master Blaster.dck" : 1
+"Mercenaries.dck" : 1
+"Merrow Riverways.dck" : 2
+"Metalcraft.dck" : 1
+"Migraine.dck" : 1
+"Mind Swarm.dck" : 1
+"Mirromancy.dck" : 2
+"Mob Rule.dck" : 1
+"Monstrous Surprise.dck" : 1
+"Mortal Coil.dck" : 1
+"Mortals of Myth.dck" : 2
+"MTGA Arcane Inventions.dck" : 2
+"MTGA Auras of Majesty.dck" : 1
+"MTGA Chaos and Mayhem.dck" : 1
+"MTGA Dragons Fire.dck" : 1
+"MTGA Eternal Thirst.dck" : 1
+"MTGA Forests Might.dck" : 2
+"MTGA Graveyard Bash.dck" : 2
+"MTGA Jungle Secrets.dck" : 1
+"MTGA Primal Fury.dck" : 1
+"MTGA Saproling Swarm.dck" : 2
+"MTGA Strength in Numbers.dck" : 1
+"MTGA Tactical Assault.dck" : 3
+"MTGA Walk the Plank.dck" : 2
+"MTGA Wing and Claw.dck" : 3
+"MTGA Wrath of Mages.dck" : 1
+"Mu Yanling.dck" : 2
+"Myr of Mirrodin.dck" : 2
+"Mystical Might.dck" : 3
+"Nicol Bolas, the Deceiver.dck" : 3
+"Ninjutsu.dck" : 2
+"Nissa, Genesis Mage.dck" : 2
+"Nissa, Nature's Artisan.dck" : 1
+"Orzhov Guild Kit.dck" : 2
+"Orzhov Oppression.dck" : 2
+"Overkill.dck" : 1
+"Pantheon's Power.dck" : 2
+"Path of Blight.dck" : 2
+"Phyrexian Assault.dck" : 2
+"Phyrexian Poison.dck" : 1
+"Power of Prophecy.dck" : 3
+"Price Of Glory.dck" : 1
+"Psychic Labyrinth.dck" : 3
+"Pummel.dck" : 1
+"Radiant's Revenge.dck" : 3
+"Rakdos Bloodsport.dck" : 1
+"Rakdos Guild Kit.dck" : 1
+"Rakdos Raid.dck" : 1
+"Ral, Caller of Storms.dck" : 1
+"Rallying Cry.dck" : 1
+"Rat's Nest.dck" : 2
+"Ravaging Swarm.dck" : 1
+"Rebels Unite.dck" : 1
+"Reign of Vampirism.dck" : 1
+"Relentless Dead.dck" : 1
+"Relentless Rush.dck" : 1
+"Relic Breaker.dck" : 1
+"Repeat Performance.dck" : 2
+"Repel the Dark.dck" : 1
+"Replicator.dck" : 2
+"Rituals of Rebirth.dck" : 2
+"Rot from Within.dck" : 1
+"Sacred Assault.dck" : 1
+"Sacrificial Bam.dck" : 1
+"Sarkhan, Dragonsoul.dck" : 1
+"Second Sun Control.dck" : 3
+"Selesnya Guild Kit.dck" : 2
+"Selesnya Surge.dck" : 2
+"Selesnya United.dck" : 2
+"Shallow Graves.dck" : 2
+"Shamanism.dck" : 2
+"Sidestep.dck" : 1
+"Simic Guild Kit.dck" : 1
+"Simic Synthesis.dck" : 2
+"Slaughterhouse.dck" : 1
+"Sleeper.dck" : 2
+"Sliver Shivers.dck" : 2
+"Snowscape.dck" : 3
+"Sole Domination.dck" : 2
+"Solitary Fiends.dck" : 3
+"Spectral Legions.dck" : 1
+"Spectral Slam.dck" : 1
+"Spiraling Doom.dck" : 2
+"Spirit Flames.dck" : 2
+"Spiritcraft.dck" : 2
+"Stampede of Beasts.dck" : 2
+"Stampede.dck" : 1
+"Stampeding Hordes.dck" : 1
+"Sultai Schemers.dck" : 3
+"Sunburst.dck" : 1
+"Superabundance.dck" : 2
+"Surge of Resistance.dck" : 1
+"Surprise Attack.dck" : 2
+"Suspended Sentence.dck" : 3
+"Swarm and Slam.dck" : 1
+"Swarming Instinct.dck" : 1
+"Sweet Revenge.dck" : 3
+"Swift Justice.dck" : 1
+"Take to the Sky.dck" : 2
+"Teferi, Timebender.dck" : 2
+"Temur Avalanche.dck" : 2
+"Tezzeret, Cruel Machinist.dck" : 2
+"Tezzeret, Master of Metal.dck" : 1
+"The Spikes.dck" : 1
+"The Swarm.dck" : 1
+"The Wilds and the Deep.dck" : 2
+"Time Drain.dck" : 3
+"Tombstone.dck" : 3
+"Transference.dck" : 1
+"Trounce-O-Matic.dck" : 2
+"Truth Seekers.dck" : 2
+"Turnabout.dck" : 1
+"Twisted Reality.dck" : 1
+"Ultimate Sacrifice.dck" : 1
+"Unearthed Secrets.dck" : 2
+"Unflinching Assault.dck" : 1
+"United Assault.dck" : 1
+"Unlikely Alliances.dck" : 1
+"Untamed Wild.dck" : 1
+"Vampire Onslaught.dck" : 1
+"Vampiric Thirst.dck" : 1
+"Vehicle Rush.dck" : 1
+"Vicious Cycle.dck" : 2
+"Vivien of the Arkbow.dck" : 2
+"Voracious Rage.dck" : 1
+"Vraska, Regal Gorgon.dck" : 2
+"Vraska, Scheming Gorgon.dck" : 2
+"War of Attrition.dck" : 1
+"Warrior's Code.dck" : 2
+"Weapons and Wards.dck" : 2
+"Wicked Big.dck" : 2
+"Wild Rush.dck" : 2
+"Will Of The Masses.dck" : 1
+"Zendikar's Rage.dck" : 2
+"Zombies Unleashed.dck" : 1

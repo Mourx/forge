@@ -1,0 +1,72 @@
+"Phyrexian Assault.dck" : 2
+"Phyrexian Poison.dck" : 1
+"Power of Prophecy.dck" : 3
+"Price Of Glory.dck" : 1
+"Psychic Labyrinth.dck" : 3
+"Pummel.dck" : 1
+"Radiant's Revenge.dck" : 3
+"Rakdos Bloodsport.dck" : 1
+"Rakdos Guild Kit.dck" : 1
+"Rakdos Raid.dck" : 1
+"Ral, Caller of Storms.dck" : 1
+"Rallying Cry.dck" : 1
+"Rat's Nest.dck" : 2
+"Ravaging Swarm.dck" : 1
+"Rebels Unite.dck" : 1
+"Reign of Vampirism.dck" : 1
+"Relentless Dead.dck" : 1
+"Relentless Rush.dck" : 1
+"Relic Breaker.dck" : 1
+"Repeat Performance.dck" : 2
+"Repel the Dark.dck" : 1
+"Replicator.dck" : 2
+"Rituals of Rebirth.dck" : 2
+"Rot from Within.dck" : 1
+"Sacred Assault.dck" : 1
+"Sacrificial Bam.dck" : 1
+"Sarkhan, Dragonsoul.dck" : 1
+"Second Sun Control.dck" : 3
+"Selesnya Guild Kit.dck" : 2
+"Selesnya Surge.dck" : 2
+"Selesnya United.dck" : 2
+"Shallow Graves.dck" : 2
+"Shamanism.dck" : 2
+"Sidestep.dck" : 1
+"Simic Guild Kit.dck" : 1
+"Simic Synthesis.dck" : 2
+"Slaughterhouse.dck" : 1
+"Sleeper.dck" : 2
+"Sliver Shivers.dck" : 2
+"Snowscape.dck" : 3
+"Sole Domination.dck" : 2
+"Solitary Fiends.dck" : 3
+"Spectral Legions.dck" : 1
+"Spectral Slam.dck" : 1
+"Spiraling Doom.dck" : 2
+"Spirit Flames.dck" : 2
+"Spiritcraft.dck" : 2
+"Stampede of Beasts.dck" : 2
+"Stampede.dck" : 1
+"Stampeding Hordes.dck" : 1
+"Sultai Schemers.dck" : 3
+"Sunburst.dck" : 1
+"Superabundance.dck" : 2
+"Surge of Resistance.dck" : 1
+"Surprise Attack.dck" : 2
+"Suspended Sentence.dck" : 3
+"Swarm and Slam.dck" : 1
+"Swarming Instinct.dck" : 1
+"Sweet Revenge.dck" : 3
+"Swift Justice.dck" : 1
+"Take to the Sky.dck" : 2
+"Teferi, Timebender.dck" : 2
+"Temur Avalanche.dck" : 2
+"Tezzeret, Cruel Machinist.dck" : 2
+"Tezzeret, Master of Metal.dck" : 1
+"The Spikes.dck" : 1
+"The Swarm.dck" : 1
+"The Wilds and the Deep.dck" : 2
+"Time Drain.dck" : 3
+"Tombstone.dck" : 3
+"Transference.dck" : 1
+"Trounce-O-Matic.dck" : 2
