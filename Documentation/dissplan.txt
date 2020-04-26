@@ -1,0 +1,13 @@
+sponsor asked for AI
+tried my own
+too hard
+switched to in built Forge
+no deck speed
+time to implement
+
+
+class diagram for forge ai
+GUI class diagram
+training tool diagram
+
+code samples? JUST enough for evidence of coding
