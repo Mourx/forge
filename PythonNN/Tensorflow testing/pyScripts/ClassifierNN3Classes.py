@@ -23,7 +23,7 @@ decks = {}
 classes = [1,2,3]
 Y_train = numpy.array([])
 count = 0
-labels = json.load(open('C:/Users/Joel/Documents/Nottingham/Project/forge/PythonNN/Tensorflow testing/Labels/labelsArchetypes.json'))
+labels = json.load(open('../Labels/labelsArchetypes.json'))
 for i in labels:
      label = numpy.array([])
      labelIN = labels[i]
@@ -38,7 +38,7 @@ for i in labels:
 Y_train = numpy.reshape(Y_train,(count,3))
 #Y_train = Y_total[:250]
 #print(Y_train.shape)
-for file in os.listdir('C:/Users/Joel/Documents/Nottingham/Project/forge/PythonNN/Tensorflow testing/Decks'):   
+for file in os.listdir('../Decks'):   
      decks[file] = file
 
 #print(decks)
@@ -47,7 +47,7 @@ X_train = numpy.array([])
 count = 0
 for e in decks:
      data = numpy.array([])
-     data = load.GetDeck('C:/Users/Joel/Documents/Nottingham/Project/forge/PythonNN/Tensorflow testing/Decks/'+e)
+     data = load.GetDeck('../Decks/'+e)
      data = numpy.reshape(data,(60,522))
      X_train = numpy.append(X_train,data)
      count = count+1

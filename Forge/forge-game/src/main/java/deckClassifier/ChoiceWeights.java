@@ -38,7 +38,7 @@ public class ChoiceWeights {
 				maxClass = i;
 			}
 		}
-		int difference = maxClass - 3;
+		float difference = ((float)(maxClass) - 1.5f);
 		// Modifies weights with a minor adjustment to change behaviour
 		MY_CARDS += difference * 0.5;
 		OP_CARDS += difference * 0.4;
